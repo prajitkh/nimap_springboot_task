@@ -7,6 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+@Where(clause = "is_active=true")
+@SQLDelete(sql = "UPDATE users SET is_active=false WHERE id=?")
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -17,10 +23,9 @@ public class User {
 
 
 	private String name;
-
 	private String email;
-
 	private boolean isActive =true;
+
 
 	public User() {
 		super();

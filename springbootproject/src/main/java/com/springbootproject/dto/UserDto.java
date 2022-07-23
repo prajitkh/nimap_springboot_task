@@ -1,5 +1,7 @@
 package com.springbootproject.dto;
 
+
+
 public class UserDto {
 
 
@@ -8,7 +10,9 @@ public class UserDto {
 	private String name;
 	private String email;
 	public UserDto() {
+	
 		super();
+		
 		// TODO Auto-generated constructor stub
 	}
 	public UserDto(int id, String name, String email) {

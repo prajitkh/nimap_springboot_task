@@ -1,18 +1,21 @@
 package com.springbootproject.dto;
 
+import javax.validation.constraints.Email;
 
+import com.sun.istack.NotNull;
 
 public class UserDto {
 
 
 	private int id;
-
+	
 	private String name;
+
 	private String email;
 	public UserDto() {
-	
+
 		super();
-		
+
 		// TODO Auto-generated constructor stub
 	}
 	public UserDto(int id, String name, String email) {

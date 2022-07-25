@@ -11,29 +11,27 @@ import com.springbootproject.entity.User;
 
 @Service
 public interface UserService {
-	
-UserDto  creatUser(UserDto user);
 
-UserDto updateUser(UserDto userDto,Integer id);
+	UserDto  creatUser(UserDto user);
 
+	UserDto updateUser(UserDto userDto,Integer id);
 
+	UserDto getUserById(Integer userId);
 
-  UserDto getUserById(Integer userId);
+	List<UserDto> getAllUser(Integer pagrNumber,Integer pageSize);
 
- List<UserDto> getAllUser();
- 
-
- void deleteUser(Integer userId);
+	public void deleteUser(Integer userId);
 
 
 
 
-	
+
+
 }
 
 
 
-		
+
 
 
 

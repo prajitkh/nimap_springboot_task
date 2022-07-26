@@ -1,8 +1,7 @@
 package com.springbootproject.dto;
 
-import javax.validation.constraints.Email;
 
-import com.sun.istack.NotNull;
+
 
 public class UserDto {
 

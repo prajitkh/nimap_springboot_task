@@ -2,11 +2,8 @@ package com.springbootproject.controller;
 
 
 import java.util.List;
-
-import javax.validation.Valid;
-
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.springbootproject.dto.SuccessResponseDto;
 import com.springbootproject.dto.UserDto;
-import com.springbootproject.entity.User;
+import com.springbootproject.exceptions.ErrorResponseDto;
+import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.service.UserServiceImpl;
 
 @RestController
@@ -30,47 +29,85 @@ public class UserController {
 	UserServiceImpl userService;
 
 
-	@GetMapping("/")
-	public ResponseEntity<List<UserDto>> getAlluser(@RequestParam(value = "pageNumber",defaultValue = "1",required = false)Integer pageNumber,@RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize)
+	@GetMapping("")
+	public ResponseEntity<?> getAlluser(
+			@RequestParam(defaultValue = "")String search,
+			@RequestParam(defaultValue = "1")String pagNo,
+	        @RequestParam(defaultValue = "10")String size)
 	{
-		List<UserDto> user= this.userService.getAllUser(pageSize, pageSize);
-		return new ResponseEntity<List<UserDto>>(user,HttpStatus.OK);
+		
+		Page<UserDto> user=userService.getAllUser(search, pagNo, size);
+		
+		
+		if(user.getTotalElements() !=0) {
+			
+			return new ResponseEntity<>(new SuccessResponseDto("sucess", "Sucess",  user.getContent()),HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity<>(new ErrorResponseDto("faild","tryAgain"),HttpStatus.BAD_REQUEST);
+				
+		}
+		
+		
+		
+		
+
 	}
 
 	@PostMapping("/")
-	public ResponseEntity<UserDto>createUser( @RequestBody UserDto userDto)
+	public ResponseEntity<?>createUser( @RequestBody UserDto userDto)
 	{
-		UserDto createUserDto=this.userService.creatUser(userDto);
-		return new ResponseEntity<>(createUserDto,HttpStatus.FOUND);
+		try {
+			UserDto createUserDto=this.userService.creatUser(userDto);
+			return new ResponseEntity<>(new SuccessResponseDto("Success","Success", createUserDto),HttpStatus.OK);
+		}catch(ResourceNotFoundException e) {
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Already Exist"),HttpStatus.NOT_FOUND);
+
+		}
+
+
 	}
 
 	//get user by id
-
 	@GetMapping("/{userId}")
-	public ResponseEntity<UserDto> getUserById(@PathVariable Integer userId)
+	public ResponseEntity<?> getUserById(@PathVariable Integer userId)
 	{
-		return ResponseEntity.ok(this.userService.getUserById(userId));
+		try {
+
+			UserDto userDto=this.userService.getUserById(userId);
+			return new ResponseEntity<>(new SuccessResponseDto("Success","Success", userDto),HttpStatus.OK);
+		}catch(ResourceNotFoundException e) {
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
+		}
 	}
 	//update user 
 	@PutMapping("/{id}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable("id")int uid )
+	public ResponseEntity<?> updateUser(@RequestBody UserDto userDto,@PathVariable("id")int uid )
 	{
-		UserDto updateUser=this.userService.updateUser(userDto, uid);
-		return ResponseEntity.ok(updateUser);
+
+		try {
+			UserDto updateUser=this.userService.updateUser(userDto, uid);
+			return new  ResponseEntity<>(new SuccessResponseDto("Success","Success", updateUser),HttpStatus.OK);
+		}catch(ResourceNotFoundException e) {
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
+		}
+
 	}
 
-	//	//@RequestMapping(value = "/{userId}",method = RequestMethod.DELETE)
-	//	@DeleteMapping("userId")
-	//	public User deleteUser(@RequestBody User user,@PathVariable("userId")Integer id)
-	//	{
-	//		////return this.userService.deleteUser(id);
-	//
-	//	}
-
 	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable Integer id){
-		this.userService.deleteUser(id);
+	public ResponseEntity<?> deleteUser(@PathVariable Integer id){
 
+		try {
+			this.userService.deleteUser(id);
+			return new  ResponseEntity<>(new SuccessResponseDto("Success","Success", "Deleted Ok.!"),HttpStatus.OK);
+		}catch(ResourceNotFoundException e) {
+
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
+
+
+
+		}
 	}
 }
 

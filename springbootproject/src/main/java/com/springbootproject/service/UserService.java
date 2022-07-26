@@ -1,13 +1,12 @@
 package com.springbootproject.service;
 
-import java.util.List;
-import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springbootproject.dto.UserDto;
-import com.springbootproject.entity.User;
+
 
 @Service
 public interface UserService {
@@ -18,7 +17,7 @@ public interface UserService {
 
 	UserDto getUserById(Integer userId);
 
-	List<UserDto> getAllUser(Integer pagrNumber,Integer pageSize);
+	Page<UserDto> getAllUser(String search,String from,String to);
 
 	public void deleteUser(Integer userId);
 

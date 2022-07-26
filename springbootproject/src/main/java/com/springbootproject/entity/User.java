@@ -1,6 +1,8 @@
 package com.springbootproject.entity;
 
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,11 +13,17 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Where(clause = "is_active=true")
-@SQLDelete(sql = "UPDATE users SET is_active=false WHERE id=?")
+@SQLDelete(sql = "UPDATE users SET is_active = false WHERE id=?")
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
+
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,16 +1,24 @@
 package com.springbootproject.service;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+
 import com.springbootproject.dto.UserDto;
 import com.springbootproject.entity.User;
 import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.pagination.Pagination;
+import com.springbootproject.repository.IUserDto;
 import com.springbootproject.repository.UserRepo;
 
 @Service
@@ -52,23 +60,8 @@ public class UserServiceImpl implements UserService{
 		return this.userToDto(user);
 	}
 
-	//get All user
-	@Override
-	public  Page<UserDto> getAllUser(String search,String from,String to) 
-	{
-		
-		Pageable paging= new Pagination().getPagination(from, to);
-		
-		if((search == "") || (search == null ) || (search.length() == 0)) {
-			return userRepo.findByOrdrById(paging,UserDto.class);
-		}
-		else {
-			
-		return userRepo.findByName(search, paging, UserDto.class);
-		
-		}
-	}
-	
+//	//get All user
+
 
 	
 	
@@ -98,9 +91,39 @@ public class UserServiceImpl implements UserService{
 		this.userRepo.deleteById(userId);
 	}
 
+	@Override
+	public List<UserDto> getAllUser() {
+ List<User> user= this.userRepo.findAll();
+ List<UserDto>save=user.stream().map(e  -> this.userToDto(e)).collect(Collectors.toList());
+ 
+  return save;
+  
 
 }
 
+//	@Override
+//	public Page<IUserDto> getAllUser(String search, String from, String to) {
+//
+//		Pageable paging = new Pagination().getPagination(from, to);
+//		Page<IUserDto> roles;
+//
+//		if ((search == "") || (search == null) || (search.length() == 0)) {
+//
+//			roles = userRepo.findByOrderById(paging, IUserDto.class);
+//
+//		} else {
+//
+//			roles = userRepo.findByName(paging, IRoleListDto.class);
+//
+//		}
+//
+//		return roles;
+//
+//	}
+//
+//		return null;
+	}
+	
 
 
 

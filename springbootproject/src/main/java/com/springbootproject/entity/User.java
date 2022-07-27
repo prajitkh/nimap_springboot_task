@@ -11,6 +11,10 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.rest.core.config.Projection;
+
+import com.springbootproject.dto.UserDto;
 
 @Where(clause = "is_active=true")
 @SQLDelete(sql = "UPDATE users SET is_active = false WHERE id=?")
@@ -19,19 +23,23 @@ import org.hibernate.annotations.Where;
 @Table(name = "users")
 public class User implements Serializable {
 
-/**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 
-@Id
-@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+
+	
 	private int id;
 
-
+	
 	private String name;
+
 	private String email;
+	
 	private boolean isActive =true;
 
 

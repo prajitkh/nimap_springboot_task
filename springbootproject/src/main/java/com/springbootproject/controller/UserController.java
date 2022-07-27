@@ -1,3 +1,4 @@
+
 package com.springbootproject.controller;
 
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.springbootproject.dto.SuccessResponseDto;
 import com.springbootproject.dto.UserDto;
+import com.springbootproject.entity.User;
 import com.springbootproject.exceptions.ErrorResponseDto;
 import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.service.UserServiceImpl;
@@ -28,33 +30,39 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 
-
-	@GetMapping("")
-	public ResponseEntity<?> getAlluser(
-			@RequestParam(defaultValue = "")String search,
-			@RequestParam(defaultValue = "1")String pagNo,
-	        @RequestParam(defaultValue = "10")String size)
+//
+//	@GetMapping("")
+//	public ResponseEntity<?> getAlluser(
+//			@RequestParam(defaultValue = "")String search,
+//			@RequestParam(defaultValue = "1")String pagNo,
+//			@RequestParam(defaultValue = "10")String size)
+//	{
+//
+//		Page<UserDto> user=userService.getAllUser(search, pagNo, size);
+//
+//
+//		if(user.getTotalElements() !=0) {
+//
+//			return new ResponseEntity<>(new SuccessResponseDto("sucess", "Sucess",  user.getContent()),HttpStatus.OK);
+//		}
+//		else
+//		{
+//			return new ResponseEntity<>(new ErrorResponseDto("faild","tryAgain"),HttpStatus.BAD_REQUEST);
+//
+//		}
+	
+	@GetMapping("/")
+	public ResponseEntity<?> getAllUser(){
+	List<UserDto> user=this.userService.getAllUser();
+	try {
+		return new ResponseEntity<>(new SuccessResponseDto("Sucess","Sucess", user),HttpStatus.OK);
+		
+	}catch(ResourceNotFoundException e) 
 	{
-		
-		Page<UserDto> user=userService.getAllUser(search, pagNo, size);
-		
-		
-		if(user.getTotalElements() !=0) {
-			
-			return new ResponseEntity<>(new SuccessResponseDto("sucess", "Sucess",  user.getContent()),HttpStatus.OK);
-		}
-		else
-		{
-			return new ResponseEntity<>(new ErrorResponseDto("faild","tryAgain"),HttpStatus.BAD_REQUEST);
-				
-		}
-		
-		
-		
-		
+		return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
 
 	}
-
+	}
 	@PostMapping("/")
 	public ResponseEntity<?>createUser( @RequestBody UserDto userDto)
 	{

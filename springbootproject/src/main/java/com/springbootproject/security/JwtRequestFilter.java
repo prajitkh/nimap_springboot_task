@@ -1,4 +1,4 @@
-package com.springbootproject.configuration;
+package com.springbootproject.security;
 
 import java.io.IOException;
 
@@ -7,16 +7,29 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-@Component
-public class JwtRequestFilter extends OncePerRequestFilter {
 
+
+@Component
+public class JwtRequestFilter  extends OncePerRequestFilter{
+
+	@Autowired
+private 	UserDetailsService userDetailsService;
+	
+	@Autowired
+	private JwtTokenUtil   jwtTokenUtil;
+	
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
+		
+		
+		
 		
 	}
 

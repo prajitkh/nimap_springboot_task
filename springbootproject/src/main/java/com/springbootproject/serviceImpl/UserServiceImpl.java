@@ -17,6 +17,7 @@ import com.springbootproject.exceptions.ResourceNotFoundException;
 
 
 import com.springbootproject.repository.UserRepo;
+import com.springbootproject.security.JwtTokenUtil;
 import com.springbootproject.service.UserService;
 
 @Service
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService{
 		return this.userToDto(user);
 	}
 
-	
+
 	//update User
 	@Override
 	public UserDto updateUser(UserDto userDto, Integer id) {
@@ -84,20 +85,27 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<UserDto> getAllUser() {
- List<User> user= this.userRepo.findAll();
- 
- List<UserDto>save=user.stream().map(e  -> this.userToDto(e)).collect(Collectors.toList());
- 
- 
- 
-  return save;
-  
+		List<User> user= this.userRepo.findAll();
 
-}
+		List<UserDto>save=user.stream().map(e  -> this.userToDto(e)).collect(Collectors.toList());
+
+
+
+		return save;
 
 
 	}
-	
+
+	@Override
+	public User FindByEmail(String email) {
+		User user =this.userRepo.findByEmail(email);
+		return  user;
+
+	}
+
+
+}
+
 
 
 

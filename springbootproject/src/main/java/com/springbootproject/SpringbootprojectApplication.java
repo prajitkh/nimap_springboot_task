@@ -13,10 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 
-public class SpringbootprojectApplication  implements CommandLineRunner{
+public class SpringbootprojectApplication {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootprojectApplication.class, args);
 		}
@@ -29,10 +29,6 @@ public class SpringbootprojectApplication  implements CommandLineRunner{
 		
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		
-	System.out.println(this.passwordEncoder.encode("xyz"));
-	}
+	
 
 }

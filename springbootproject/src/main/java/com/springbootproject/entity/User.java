@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @SQLDelete(sql = "UPDATE users SET is_active = false WHERE id=?")
 @Entity
 @Table(name = "users")
-public class User implements UserDetails   {
+public class User  {
 
 
 
@@ -102,51 +102,6 @@ public class User implements UserDetails   {
 
 
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-	
-		return null;
-	}
-
-
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return this.email;
-	}
-
-
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
 
 

@@ -4,6 +4,7 @@ package com.springbootproject.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.springbootproject.dto.UserDto;
+import com.springbootproject.entity.User;
 
 
 
@@ -18,6 +19,8 @@ public interface UserService {
 
 	//	Page<UserDto> getAllUser(String search,String from,String to);
 
+	
+	User FindByEmail(String email);
 
 
 	List<UserDto> getAllUser();

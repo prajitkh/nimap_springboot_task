@@ -19,14 +19,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.springbootproject.dto.JwtAuthRequest;
+import com.springbootproject.dto.LoggerDto;
+import com.springbootproject.dto.SuccessResponseDto;
+import com.springbootproject.dto.UserDto;
 import com.springbootproject.entity.User;
+import com.springbootproject.exceptions.ErrorResponseDto;
+import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.repository.UserRepo;
 import com.springbootproject.security.CustomUserDetailsService;
 import com.springbootproject.security.JwtAuthResponse;
 import com.springbootproject.security.JwtTokenUtil;
+import com.springbootproject.service.LoggerServiceInterface;
 import com.springbootproject.service.UserService;
 import com.springbootproject.serviceImpl.AuthServiceImpl;
 
@@ -47,53 +55,74 @@ public class AuthController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private LoggerServiceInterface loggerServiceInterface;
 
-
-
+	
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	
+	
+	
 
 	@Autowired
 	private AuthServiceImpl authServiceImpl;
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
 	//create login api  to create tokean
 
 
+
 	@PostMapping("/login")
-	public ResponseEntity<?> createToken(@RequestBody JwtAuthRequest request ) throws Exception {
+	public ResponseEntity<?> createAuthenticationToken( @RequestBody JwtAuthRequest authenticationRequest)  {
 
-	User userEntity = userRepo.findByEmail(request.getEmail());
+		try {
 
-			if (!authServiceImpl.comparePassword(request.getPassword(), userEntity.getPassword())) {
+			User user = userRepo.findByEmail(authenticationRequest.getEmail());
 
-				return new ResponseEntity<>(new com.springbootproject.exceptions.ErrorResponseDto(null, null), HttpStatus.UNAUTHORIZED);
+			String password=passwordEncoder.encode(user.getPassword());
+			if (!authServiceImpl.comparePassword(authenticationRequest.getPassword(), user.getPassword())) {
+
+				return new ResponseEntity<>(new ErrorResponseDto("Invalid Credential", "invalidCreds"),HttpStatus.UNAUTHORIZED);
 			}
+			System.out.println("DATA"+user.getEmail());
+			
+			final UserDetails userDetails=userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+			final String token = jwtTokenUtil.generateToken(user);
 
-			System.out.println("DATa"+userEntity.getEmail());
-			final String token = jwtTokenUtil.generateToken(userEntity);
 
-			System.out.println(token);
-			return new ResponseEntity<>(token ,HttpStatus.OK);
+			//List<IPermissionDto> permissions = userServiceInterface.getUserPermission(userEntity.getId());
+			LoggerDto logger = new LoggerDto();
+			logger.setToken(token);
+			Calendar calender = Calendar.getInstance();
+
+		calender.add(Calendar.HOUR_OF_DAY, 5);
+		logger.setExpireAt(calender.getTime());
+
+			loggerServiceInterface.createLogger(logger, user);
+			return new ResponseEntity<>(new SuccessResponseDto("Success", "success", new JwtAuthResponse(token)), HttpStatus.OK);
+
+		} catch (ResourceNotFoundException e) {
+
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
 
 		}
-	
-}
+		}
+	}
 
 
 
-	//List<IPermissionDto> permissions = userServiceInterface.getUserPermission(userEntity.getId());
-	//				LoggerDto logger = new LoggerDto();
-	//				logger.setToken(token);
-	//				Calendar calender = Calendar.getInstance();
-	//				calender.add(Calendar.HOUR_OF_DAY, 5);
-	//				logger.setExpireAt(calender.getTime());
-	//				loggerServiceInterface.createLogger(logger, userEntity);
 
-	//return new ResponseEntity<>(new SuccessResponseDto("Success", "success", new AuthResponseDto(token, permissions,userEntity.getEmail(),userEntity.getName(),userEntity.getId())), HttpStatus.OK);
 
-	//			} catch (ResourceNotFoundException e) {
-	//
-	//				return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "userNotFound"), HttpStatus.NOT_FOUND);
+
+
+
+
+
+
+
+
 
 

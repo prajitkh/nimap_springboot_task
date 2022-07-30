@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 
 import com.springbootproject.entity.User;
+import com.springbootproject.repository.UserRepo;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,7 +22,8 @@ public class JwtTokenUtil  {
 	
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 	
-	
+	@Autowired
+	UserRepo userRepo;
 	
 	//std add properties file not write in class 
 	private String secret="jwtTokenKey";
@@ -28,7 +31,8 @@ public class JwtTokenUtil  {
 
 	// retrieve username from jwt token
 	public String getEmailFromToken(String token) {
-
+		System.out.println("fmail frm toekn "+ getClaimFromToken(token, Claims::getSubject));
+//		User user = getClaimFromToken(token, Claims::getSubject);
 		return getClaimFromToken(token, Claims::getSubject);
 
 	}
@@ -43,12 +47,16 @@ public class JwtTokenUtil  {
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 
 		final Claims claims = getAllClaimsFromToken(token);
+		
+		System.out.println("claims "+ claimsResolver.apply(claims));
+
 		return claimsResolver.apply(claims);
 
 	}
 
 	// for retrieveing any information from token we will need the secret key
 	private Claims getAllClaimsFromToken(String token) {
+		System.out.println("get all claims "+ Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody());
 
 		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
 
@@ -71,7 +79,7 @@ public class JwtTokenUtil  {
 	public String generateToken(User userDetails) {
 
 		Map<String, Object> claims = new HashMap<>();
-		return doGenerateToken(claims, userDetails.toString());
+		return doGenerateToken(claims, userDetails.getEmail());
 
 	}
 
@@ -90,7 +98,6 @@ public class JwtTokenUtil  {
 	// Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
 	// compaction of the JWT to a URL-safe string
 	private String doGenerateToken(Map<String, Object> claims, String subject) {
-
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + (JWT_TOKEN_VALIDITY * 1000))).signWith(SignatureAlgorithm.HS512, secret).compact();
 
 	}

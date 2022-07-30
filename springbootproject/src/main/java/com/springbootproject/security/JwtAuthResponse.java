@@ -1,9 +1,26 @@
 package com.springbootproject.security;
 
-public class JwtAuthResponse {
+import java.io.Serializable;
+
+public class JwtAuthResponse  implements Serializable{
 	
 	
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7412640266149798683L;
+
+
 	private String token;
+	
+
+	private String email;
+
+	private String name;
+
+	private int  id;
 
 	public String getToken() {
 		return token;
@@ -13,15 +30,34 @@ public class JwtAuthResponse {
 		this.token = token;
 	}
 
-	@Override
-	public String toString() {
-		return "JwtAuthResponse [token=" + token + "]";
+	public String getEmail() {
+		return email;
 	}
 
-	public JwtAuthResponse(String token2) {
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public JwtAuthResponse(String token) {
 		super();
+		this.token = token;
 		
 	}
-	
 
 }

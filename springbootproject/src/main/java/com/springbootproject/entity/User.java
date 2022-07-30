@@ -3,7 +3,7 @@ package com.springbootproject.entity;
 
 
 
-import java.util.Collection;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 
 @Where(clause = "is_active=true")
@@ -99,6 +98,9 @@ public class User  {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
+
 
 
 

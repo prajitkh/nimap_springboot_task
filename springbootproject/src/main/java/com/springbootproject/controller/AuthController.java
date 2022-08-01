@@ -58,59 +58,66 @@ public class AuthController {
 	@Autowired
 	private LoggerServiceInterface loggerServiceInterface;
 
-	
-	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
-	
-	
-	
+
 
 	@Autowired
 	private AuthServiceImpl authServiceImpl;
 
 
+	
 	//create login api  to create tokean
-
-
-
 	@PostMapping("/login")
-	public ResponseEntity<?> createAuthenticationToken( @RequestBody JwtAuthRequest authenticationRequest)  {
+	public ResponseEntity<?> createAuthenticationToken( @RequestBody JwtAuthRequest authenticationRequest) {
 
 		try {
-
-			User user = userRepo.findByEmail(authenticationRequest.getEmail());
-
-			String password=passwordEncoder.encode(user.getPassword());
-			if (!authServiceImpl.comparePassword(authenticationRequest.getPassword(), user.getPassword())) {
-
-				return new ResponseEntity<>(new ErrorResponseDto("Invalid Credential", "invalidCreds"),HttpStatus.UNAUTHORIZED);
-			}
-			System.out.println("DATA"+user.getEmail());
 			
+			User user = userRepo.findByEmail(authenticationRequest.getEmail());
+			
+			//String password=passwordEncoder.encode(user.getPassword());
+//			if (!authServiceImpl.comparePassword(authenticationRequest.getPassword(), user.getPassword())) {
+//		
+//				return new ResponseEntity<>(new ErrorResponseDto("Invalid Credential", "invalidCreds"),HttpStatus.UNAUTHORIZED);
+//			}
+			
+			System.out.println("DATA"+user.getEmail());
 			final UserDetails userDetails=userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-			final String token = jwtTokenUtil.generateToken(user);
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			
+				LoggerDto logger = new LoggerDto();
+				logger.setToken(token);
+				Calendar calender = Calendar.getInstance();
+				calender.add(Calendar.HOUR_OF_DAY, 5);
+				logger.setExpireAt(calender.getTime());
+				loggerServiceInterface.createLogger(logger, user);
+				
 
+		return new ResponseEntity<>(new SuccessResponseDto("Success", "success", new JwtAuthResponse(token)), HttpStatus.OK);
+			//return new ResponseEntity<>(new SuccessResponseDto("Success", "success", new JwtAuthResponse(token, user.getEmail(),user.getName(),user.getId())), HttpStatus.OK);
 
-			//List<IPermissionDto> permissions = userServiceInterface.getUserPermission(userEntity.getId());
-			LoggerDto logger = new LoggerDto();
-			logger.setToken(token);
-			Calendar calender = Calendar.getInstance();
-
-		calender.add(Calendar.HOUR_OF_DAY, 5);
-		logger.setExpireAt(calender.getTime());
-
-			loggerServiceInterface.createLogger(logger, user);
-			return new ResponseEntity<>(new SuccessResponseDto("Success", "success", new JwtAuthResponse(token)), HttpStatus.OK);
-
-		} catch (ResourceNotFoundException e) {
-
+		
+		}
+		catch (ResourceNotFoundException e) {
 			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
 
 		}
-		}
+		
 	}
+
+	@PostMapping("/register")
+	public ResponseEntity<?>createUser(@Valid @RequestBody UserDto userDto)
+	{
+		try {
+			UserDto createUserDto=this.userService.creatUser(userDto);
+			return new ResponseEntity<>(new SuccessResponseDto("Success","Success", createUserDto),HttpStatus.OK);
+		}catch(ResourceNotFoundException e) {
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Already Exist"),HttpStatus.NOT_FOUND);
+
+		}
+
+	}
+}
 
 
 

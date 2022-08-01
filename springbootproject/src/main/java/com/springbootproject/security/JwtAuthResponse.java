@@ -60,4 +60,13 @@ public class JwtAuthResponse  implements Serializable{
 		
 	}
 
+	public JwtAuthResponse(String token, String email, String name, int id) {
+		super();
+		this.token = token;
+		this.email = email;
+		this.name = name;
+		this.id = id;
+	}
+	
+
 }

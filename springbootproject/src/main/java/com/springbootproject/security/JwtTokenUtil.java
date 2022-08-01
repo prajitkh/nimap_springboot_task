@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,8 @@ public class JwtTokenUtil  {
 	UserRepo userRepo;
 	
 	//std add properties file not write in class 
-	private String secret="jwtTokenKey";
+	@Value("jwtTokenKey")
+	private String secret;
 	
 
 	// retrieve username from jwt token
@@ -76,10 +78,10 @@ public class JwtTokenUtil  {
 	// }
 
 	// generate token for user
-	public String generateToken(User userDetails) {
+	public String generateToken(UserDetails userDetails) {
 
 		Map<String, Object> claims = new HashMap<>();
-		return doGenerateToken(claims, userDetails.getEmail());
+		return doGenerateToken(claims, userDetails.getUsername());
 
 	}
 
@@ -115,6 +117,8 @@ public class JwtTokenUtil  {
 
 		// throw new ResourceNotFoundException("Timeout for this request");
 	}
+
+
 
 	}
 

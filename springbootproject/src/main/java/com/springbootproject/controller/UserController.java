@@ -65,17 +65,7 @@ public class UserController {
 		return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
 		
 	}
-	}
-	@PostMapping("/")
-	public ResponseEntity<?>createUser(@Valid @RequestBody UserDto userDto)
-	{
-		try {
-			UserDto createUserDto=this.userService.creatUser(userDto);
-			return new ResponseEntity<>(new SuccessResponseDto("Success","Success", createUserDto),HttpStatus.OK);
-		}catch(ResourceNotFoundException e) {
-			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Already Exist"),HttpStatus.NOT_FOUND);
-
-		}
+	
 
 
 	}

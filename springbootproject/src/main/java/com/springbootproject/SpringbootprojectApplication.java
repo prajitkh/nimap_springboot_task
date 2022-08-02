@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 
+
 @SpringBootApplication
 @ComponentScan("com.springbootproject")
 @EntityScan("com.springbootproject")
@@ -19,6 +20,7 @@ public class SpringbootprojectApplication {
 
 
 
+	
 	public static void main(String[] args) {
 
 		SpringApplication.run(SpringbootprojectApplication.class, args);

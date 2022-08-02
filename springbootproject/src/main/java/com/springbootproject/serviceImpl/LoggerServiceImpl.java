@@ -19,12 +19,22 @@ public class LoggerServiceImpl  implements LoggerServiceInterface{
 	@Override
 	public void createLogger(LoggerDto loggerDto, User user) {
 	LoggerEntity logger=new LoggerEntity();
-	logger.setUserId(user);
+	//logger.setId(user);
 	logger.setToken(loggerDto.getToken());
 	logger.setExpireAt(loggerDto.getExpireAt());
 	loggerRepository.save(logger);
 		
 	}
+
+	@Override
+	public void logout(String token) {
+		final String token1=token.substring(7);
+	
+		loggerRepository.removeByToken(token1);
+		
+		
+	}
 }
+	
 
 

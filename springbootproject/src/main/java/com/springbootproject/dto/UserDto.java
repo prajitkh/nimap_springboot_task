@@ -1,23 +1,20 @@
 package com.springbootproject.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
-import javax.validation.constraints.Size;
 
 public class UserDto {
 
 	private int id;
-
-	@NotNull
-	@Size(min = 7,message = "Username must be minimun 4 characters !!!")
+	
+	//@NotNull
+	//@Size(min = 10,message = "Username must be minimun 4 characters !!!")
 	private String name;
 
-	@Email(message = "Email address is not valid")
+	//@Email(message = "Email address is not valid" )
 	private String email;
 
-	@NotNull
-	@Size(min = 3,max = 10 ,message ="Password must be 3 char and max size 10 char !!")
+
+	//@Size(min = 3,max = 10 ,message ="Password must be 3 char and max size 10 char !!")
 	private String password;
 
 	public UserDto() {

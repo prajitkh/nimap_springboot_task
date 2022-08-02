@@ -34,6 +34,7 @@ public class AuthServiceImpl implements AuthInterface {
 
 	user = userRepo.findByEmail(email);
 		if (user == null) {
+			
 	throw new UsernameNotFoundException("User not found with Email: " + email);
 		}
 

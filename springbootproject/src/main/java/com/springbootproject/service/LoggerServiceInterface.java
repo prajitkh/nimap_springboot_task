@@ -11,4 +11,6 @@ public interface LoggerServiceInterface {
 	
  void createLogger(LoggerDto loggerDto, User user);
 
+ 
+ void logout(String token);
 }

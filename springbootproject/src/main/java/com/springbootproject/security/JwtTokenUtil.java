@@ -20,21 +20,25 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtTokenUtil  {
-	
+
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+	private static final long serialVersionUID = -2550185165626007488L;
+
 	
+
+	public static final long JWT_TOKEN_VALIDITY_FORGOT_PASS = 5 * 60;
 	@Autowired
 	UserRepo userRepo;
-	
+
 	//std add properties file not write in class 
 	@Value("jwtTokenKey")
 	private String secret;
-	
+
 
 	// retrieve username from jwt token
 	public String getEmailFromToken(String token) {
 		System.out.println("fmail frm toekn "+ getClaimFromToken(token, Claims::getSubject));
-//		User user = getClaimFromToken(token, Claims::getSubject);
+		//		User user = getClaimFromToken(token, Claims::getSubject);
 		return getClaimFromToken(token, Claims::getSubject);
 
 	}
@@ -49,7 +53,7 @@ public class JwtTokenUtil  {
 	public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
 
 		final Claims claims = getAllClaimsFromToken(token);
-		
+
 		System.out.println("claims "+ claimsResolver.apply(claims));
 
 		return claimsResolver.apply(claims);
@@ -71,11 +75,7 @@ public class JwtTokenUtil  {
 		return expiration.before(new Date());
 
 	}
-	// check if the token has expired
-	// public Boolean isTokenExpiredpubl(String token) {
-	// final Date expiration = getExpirationDateFromToken(token);
-	// return expiration.before(new Date());
-	// }
+
 
 	// generate token for user
 	public String generateToken(UserDetails userDetails) {
@@ -85,13 +85,7 @@ public class JwtTokenUtil  {
 
 	}
 
-	// generate token for user
-//	public String generateTokenOnForgotPass(String email) {
-//
-//		Map<String, Object> claims = new HashMap<>();
-//		return doGenerateTokenOnForgotPass(claims, email);
-//
-//	}
+
 
 	// while creating the token -
 	// 1. Define claims of the token, like Issuer, Expiration, Subject, and the ID
@@ -104,11 +98,7 @@ public class JwtTokenUtil  {
 
 	}
 
-//	private String doGenerateTokenOnForgotPass(Map<String, Object> claims, String subject) {
-//
-//		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + (JWT_TOKEN_VALIDITY_FORGOT_PASS * 1000))).signWith(SignatureAlgorithm.HS512, secret).compact();
-//
-//	}
+
 
 	// validate token
 	public Boolean validateToken(String token, UserDetails userDetails) {
@@ -117,9 +107,21 @@ public class JwtTokenUtil  {
 
 		// throw new ResourceNotFoundException("Timeout for this request");
 	}
+	// generate token for user
+	public String generateTokenOnForgotPass(String email) {
 
-
+		Map<String, Object> claims = new HashMap<>();
+		return doGenerateTokenOnForgotPass(claims, email);
 
 	}
+	private String doGenerateTokenOnForgotPass(Map<String, Object> claims, String subject) {
+
+		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + (JWT_TOKEN_VALIDITY_FORGOT_PASS * 1000))).signWith(SignatureAlgorithm.HS512, secret).compact();
+
+	}
+
+
+
+}
 
 

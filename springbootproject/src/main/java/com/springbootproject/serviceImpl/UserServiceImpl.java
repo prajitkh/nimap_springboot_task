@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -26,6 +26,8 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserRepo userRepo;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -45,10 +47,16 @@ public class UserServiceImpl implements UserService{
 
 	//post user new create
 	@Override
-	public UserDto creatUser(UserDto userDto) {
-		User user=this.dtoToUser(userDto);
-		User saveUser=this.userRepo.save(user);
-		return this.userToDto(saveUser);
+	public User creatUser(UserDto userDto) {
+		User user=new User();
+		user.setEmail(userDto.getEmail());
+		user.setName(userDto.getName());
+		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		return this.userRepo.save(user);
+		
+	
+
+		
 	}
 
 	@Override
@@ -61,18 +69,13 @@ public class UserServiceImpl implements UserService{
 
 	//update User
 	@Override
-	public UserDto updateUser(UserDto userDto, Integer id) {
-		User user= this.userRepo.findById(id).orElseThrow(() -> 
-		new ResourceNotFoundException("User not found with Id :"+id));
-		//User user=this.dtoToUser(userDto);
-		user.setEmail(userDto.getEmail());
+	public void updateUser(UserDto userDto, Integer id) {
+	User user= this.userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with Id :"+id));
 		user.setName(userDto.getName());
-		user.setPassword(userDto.getPassword());
+	     userRepo.save(user);
+		
 
-		User updateUser=this.userRepo.save(user);
-		UserDto saveUser=this.userToDto(updateUser);
-
-		return saveUser;
+	
 	}
 
 	@Override
@@ -104,7 +107,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-}
+	
+		
+	}
+
+
+
 
 
 

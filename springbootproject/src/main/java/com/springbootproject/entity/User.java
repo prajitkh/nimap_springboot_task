@@ -1,6 +1,7 @@
 package com.springbootproject.entity;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+
+
 
 
 @Where(clause = "is_active=true")
@@ -23,10 +27,11 @@ public class User  {
 	
 	private String name;
 	
-
+	@Column(name = "email",  unique = true)
 	private String email;
 
 	private boolean isActive =true;
+	
 
 	private String password;
 

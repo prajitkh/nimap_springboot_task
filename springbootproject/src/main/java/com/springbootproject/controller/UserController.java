@@ -64,11 +64,7 @@ public class UserController {
 		}catch(ResourceNotFoundException e) 
 		{
 			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
-
 		}
-
-
-
 	}
 
 	//get user by id
@@ -83,6 +79,7 @@ public class UserController {
 			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
 		}
 	}
+	
 	//update user 
 	@PutMapping("/{ikd}")
 	public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable("ikd")int uid )
@@ -95,12 +92,6 @@ public class UserController {
 		}
 	}
 
-
-
-
-
-
-
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Integer id){
 
@@ -110,14 +101,8 @@ public class UserController {
 		}catch(ResourceNotFoundException e) {
 
 			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
-
-
-
-		}
 	}
-
-
-
+	}
 }
 
 

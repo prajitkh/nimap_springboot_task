@@ -31,7 +31,7 @@ public class JwtTokenUtil  {
 	UserRepo userRepo;
 
 	//std add properties file not write in class 
-	@Value("jwtTokenKey")
+	@Value("${jwt.secret}")
 	private String secret;
 
 

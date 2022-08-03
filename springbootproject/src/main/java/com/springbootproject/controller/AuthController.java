@@ -1,46 +1,31 @@
 package com.springbootproject.controller;
 
 import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.springbootproject.dto.JwtAuthRequest;
 import com.springbootproject.dto.LoggerDto;
-import com.springbootproject.dto.SuccessResponseDto;
 import com.springbootproject.dto.UserDto;
 import com.springbootproject.entity.User;
 import com.springbootproject.exceptions.ApiExceptions;
 import com.springbootproject.exceptions.ErrorResponseDto;
-import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.repository.UserRepo;
-import com.springbootproject.security.CustomUserDetailsService;
 import com.springbootproject.security.JwtAuthResponse;
 import com.springbootproject.security.JwtTokenUtil;
 import com.springbootproject.service.LoggerServiceInterface;
-import com.springbootproject.service.UserService;
 import com.springbootproject.serviceImpl.AuthServiceImpl;
 import com.springbootproject.serviceImpl.UserServiceImpl;
 
@@ -53,8 +38,7 @@ public class AuthController {
 
 	@Autowired
 	private UserRepo userRepo;
-	@Autowired
-	private JwtAuthRequest jwtAuthRequest;
+
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -88,20 +72,13 @@ public class AuthController {
 				calender.add(Calendar.HOUR_OF_DAY, 5);
 				logger.setExpireAt(calender.getTime());
 				loggerServiceInterface.createLogger(logger, user);
-
-
 				return new ResponseEntity<>( new JwtAuthResponse(token), HttpStatus.OK);
-				//return new ResponseEntity<>(new SuccessResponseDto("Success", "success", new JwtAuthResponse(token, user.getEmail(),user.getName(),user.getId())), HttpStatus.OK);
-
 			}
-			}catch(BadCredentialsException e) {
-				throw new ApiExceptions("INVALID USERNAME OR PASSWORD");
-			
+		}catch(BadCredentialsException e) {
+			throw new ApiExceptions("INVALID USERNAME OR PASSWORD");
 
 		}catch (Exception e) {
 			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
-
-
 
 		}
 		return new ResponseEntity<>(new ErrorResponseDto("Invalid PASSWORD", "CHECK PASSWORD"),HttpStatus.UNAUTHORIZED);
@@ -115,15 +92,11 @@ public class AuthController {
 		return ResponseEntity.ok(userServiceImpl.creatUser(userDto));
 
 	}
-	
-	//@GetMapping("/logout")
+
 	@Transactional
 	@RequestMapping(value = "/logout",method = RequestMethod.POST)
 	public ResponseEntity<?> logoutUser(@RequestHeader("Authorization") String token, HttpServletRequest request) {
-
 		loggerServiceInterface.logout(token);
-		//return ResponseEntity.ok("Logout");
-		
 		return new ResponseEntity<>(new ErrorResponseDto("Logout Successfully", "logoutSuccess"), HttpStatus.OK);
 
 	}

@@ -47,16 +47,18 @@ public class UserServiceImpl implements UserService{
 
 	//post user new create
 	@Override
-	public User creatUser(UserDto userDto) {
+	public String creatUser(UserDto userDto) {
 		User user=new User();
 		user.setEmail(userDto.getEmail());
 		user.setName(userDto.getName());
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		return this.userRepo.save(user);
-		
-	
+		return "User Registration successful......!!!!!!!!!!!!!!";
 
-		
+		//return this.userRepo.save(user);
+
+
+
+
 	}
 
 	@Override
@@ -70,12 +72,12 @@ public class UserServiceImpl implements UserService{
 	//update User
 	@Override
 	public void updateUser(UserDto userDto, Integer id) {
-	User user= this.userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with Id :"+id));
+		User user= this.userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with Id :"+id));
 		user.setName(userDto.getName());
-	     userRepo.save(user);
-		
+		userRepo.save(user);
 
-	
+
+
 	}
 
 	@Override
@@ -89,11 +91,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<UserDto> getAllUser() {
 		List<User> user= this.userRepo.findAll();
-
 		List<UserDto>save=user.stream().map(e  -> this.userToDto(e)).collect(Collectors.toList());
-
-
-
 		return save;
 
 
@@ -107,9 +105,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	
-		
-	}
+
+
+}
 
 
 

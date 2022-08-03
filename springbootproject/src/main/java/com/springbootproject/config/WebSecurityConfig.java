@@ -13,16 +13,15 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.springbootproject.security.CustomUserDetailsService;
+import com.springbootproject.security.CustemUserDetailService;
 import com.springbootproject.security.JwtAuthenticationEntryPoint;
 import com.springbootproject.security.JwtRequestFilter;
+import com.springbootproject.serviceImpl.AuthServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -30,26 +29,37 @@ import com.springbootproject.security.JwtRequestFilter;
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
 
 	@Autowired
-	private CustomUserDetailsService  customUserDetailsService;
-
+	UserDetailsService jwtuserDetailsService;
+	
+	
 	@Autowired
-	JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	private CustemUserDetailService custemUserDetailService;
+	
+	
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
+	
+
+	
+	@Override
+	@Bean
+	protected UserDetailsService userDetailsService() {
+	
+		return super.userDetailsService();
+	}
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-
-
-		auth.userDetailsService(this.customUserDetailsService).passwordEncoder(passwordEncoder());
-
+		auth.userDetailsService(custemUserDetailService).passwordEncoder(passwordEncoder());
 	}
 
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().authorizeHttpRequests()
-		.antMatchers("/auth/login","/auth/register","/logout").permitAll()
+		.antMatchers("/auth/login","/auth/register","/auth/logout").permitAll()
 		.anyRequest().authenticated()
 		.and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
 		.and()
@@ -63,29 +73,15 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 
-	}
+	} 
+	
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 
 		return super.authenticationManagerBean();
 	}
-//
-//	@Bean
-//	public CorsConfigurationSource corsConfigurationSource() {
-//
-//		System.out.println("corsConfigurationSource");
-//		CorsConfiguration configuration = new CorsConfiguration();
-//		configuration.setAllowedOrigins(Arrays.asList("*"));
-//		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-//		configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
-//		configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		source.registerCorsConfiguration("/**", configuration);
-//		return source;
-//
-//	}
-//	
+
 	
 	
 	

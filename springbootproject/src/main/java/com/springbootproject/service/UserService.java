@@ -11,7 +11,7 @@ import com.springbootproject.entity.User;
 @Service
 public interface UserService {
 
-	User  creatUser(UserDto user);
+	String  creatUser(UserDto user);
 
 	void updateUser(UserDto userDto,Integer id);
 

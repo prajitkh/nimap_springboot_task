@@ -1,15 +1,17 @@
 package com.springbootproject.serviceImpl;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springbootproject.dto.LoggerDto;
 import com.springbootproject.entity.LoggerEntity;
 import com.springbootproject.entity.User;
-import com.springbootproject.service.LoggerRepository;
+import com.springbootproject.repository.LoggerRepository;
 import com.springbootproject.service.LoggerServiceInterface;
-@Service
+@Service("LoggerServiceImpl")
 public class LoggerServiceImpl  implements LoggerServiceInterface{
 
 	
@@ -34,6 +36,13 @@ public class LoggerServiceImpl  implements LoggerServiceInterface{
 		
 		
 	}
+
+	@Override
+	public LoggerEntity getLoggerDetail(String requestTokenHeader) {
+	
+		return this.loggerRepository.findByToken(requestTokenHeader);
+	}
+
 }
 	
 

@@ -1,20 +1,26 @@
 package com.springbootproject.dto;
 
+import javax.persistence.Column;
+import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserDto {
 
 	private int id;
 	
-	//@NotNull
+
 	//@Size(min = 10,message = "Username must be minimun 4 characters !!!")
 	private String name;
 
 	//@Email(message = "Email address is not valid" )
+
 	private String email;
 
 
-	//@Size(min = 3,max = 10 ,message ="Password must be 3 char and max size 10 char !!")
+	@Size(min = 3,max = 10 ,message ="Password must be 3 char and max size 10 char !!")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 
 	public UserDto() {
@@ -23,13 +29,7 @@ public class UserDto {
 
 		// TODO Auto-generated constructor stub
 	}
-	public UserDto(int id, String name, String email,String password) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password=password;
-	}
+	
 	public int getId() {
 		return id;
 	}
@@ -48,12 +48,23 @@ public class UserDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public UserDto(int id, String name, String email, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
 
 
 }

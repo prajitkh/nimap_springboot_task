@@ -1,8 +1,9 @@
 package com.springbootproject.entity;
 
-
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,68 +15,71 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 
 
+
 @Where(clause = "is_active=true")
-@SQLDelete(sql = "UPDATE users SET is_active = false WHERE id=?")
+@SQLDelete(sql = "UPDATE  SET roles = false WHERE id=?")
 @Entity
-@Table(name = "users")
-public class User implements Serializable  {
+@Table(name = "roles")
+public class RoleEntity implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
+	@Column(name = "role_name")
+	private String roleName;
 
-	private String name;
+	@Column(name = "is_active")
+	private boolean isActive=true;
 
-	@Column(name = "email",  unique = true)
-	private String email;
-
-	private boolean isActive =true;
-
-
-	private String password;
-
-
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "created_by")
 	private User createdBy;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.user", cascade = CascadeType.ALL)
-	private List<UserRoleEntity> userRole;
-
-
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "updated_by")
 	private User updatedBy;
 
-	public User() {
+	@Column(name = "created_at")
+	@CreationTimestamp
+	private Date createdAt;
+
+	@Column(name = "updated_at")
+	@UpdateTimestamp
+	private Date updatedAt;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.role", cascade = CascadeType.ALL)
+	private List<UserRoleEntity> userRole;
+
+	public RoleEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-	public User(int id, String name, String email, boolean isActive, String password, User createdBy,
-			List<com.springbootproject.entity.UserRoleEntity> userRole, User updatedBy) {
+	public RoleEntity(int id, String roleName, boolean isActive, User createdBy, User updatedBy, Date createdAt,
+			Date updatedAt, List<UserRoleEntity> userRole) {
 		super();
 		this.id = id;
-		this.name = name;
-		this.email = email;
+		this.roleName = roleName;
 		this.isActive = isActive;
-		this.password = password;
 		this.createdBy = createdBy;
-		this.userRole = userRole;
 		this.updatedBy = updatedBy;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.userRole = userRole;
 	}
 
 	public int getId() {
@@ -86,20 +90,12 @@ public class User implements Serializable  {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 	public boolean isActive() {
@@ -110,80 +106,44 @@ public class User implements Serializable  {
 		this.isActive = isActive;
 	}
 
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-
-	public void setPassword(String password) {
-		this.password = password;
-
-	}
-
-
-
-
-
 	public User getCreatedBy() {
 		return createdBy;
 	}
-
-
-
-
 
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 
-
-
-
-
-	public List<UserRoleEntity> getUserRole() {
-		return userRole;
-	}
-
-
-
-
-
-	public void setUserRole(List<UserRoleEntity> userRole) {
-		this.userRole = userRole;
-	}
-
-
-
-
-
 	public User getUpdatedBy() {
 		return updatedBy;
 	}
-
-
-
-
 
 	public void setUpdatedBy(User updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + "]";
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
 
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
+	public List<UserRoleEntity> getUserRole() {
+		return userRole;
+	}
 
-
-
-
-
+	public void setUserRole(List<UserRoleEntity> userRole) {
+		this.userRole = userRole;
+	}
 
 }

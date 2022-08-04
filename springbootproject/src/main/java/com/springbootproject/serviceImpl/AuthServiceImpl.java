@@ -12,6 +12,7 @@ import com.springbootproject.service.AuthInterface;
 
 @Service
 public class AuthServiceImpl implements AuthInterface {
+	
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 	@Autowired

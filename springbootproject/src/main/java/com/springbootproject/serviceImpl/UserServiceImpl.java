@@ -47,14 +47,14 @@ public class UserServiceImpl implements UserService{
 
 	//post user new create
 	@Override
-	public String creatUser(UserDto userDto) {
+	public User creatUser(UserDto userDto) {
 		User user=new User();
 		user.setEmail(userDto.getEmail());
 		user.setName(userDto.getName());
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		return "User Registration successful......!!!!!!!!!!!!!!";
+		//return "User Registration successful......!!!!!!!!!!!!!!";
 
-		//return this.userRepo.save(user);
+		return this.userRepo.save(user);
 
 
 

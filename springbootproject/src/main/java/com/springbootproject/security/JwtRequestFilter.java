@@ -35,7 +35,9 @@ public class JwtRequestFilter  extends OncePerRequestFilter{
 private AuthServiceImpl authServiceImpl;
 
 @Autowired
-private UserDetailsService userDetailsService;
+private CustemUserDetailService custemUserDetailService;
+
+
 
 	@Autowired
 	private JwtTokenUtil   jwtTokenUtil;
@@ -95,8 +97,11 @@ private UserDetailsService userDetailsService;
 
 		if(email != null && SecurityContextHolder.getContext().getAuthentication() ==null)
 		{
-			UserDetails userDetails=this.userDetailsService.loadUserByUsername(email);
-		
+			//UserDetails userDetails=this.userDetailsService.loadUserByUsername(email);
+			//UserDetails userDetails=custemUserDetailService.loadUserByUsername(email);
+			
+			UserDetails userDetails=this.authServiceImpl.loadUserByUsername(email);
+			
 			//validate need username detials to use userdetails service 
 			if(this.jwtTokenUtil.validateToken(token, userDetails))
 			{

@@ -33,26 +33,7 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 
-	//
-	//	@GetMapping("")
-	//	public ResponseEntity<?> getAlluser(
-	//			@RequestParam(defaultValue = "")String search,
-	//			@RequestParam(defaultValue = "1")String pagNo,
-	//			@RequestParam(defaultValue = "10")String size)
-	//	{
-	//
-	//		Page<UserDto> user=userService.getAllUser(search, pagNo, size);
-	//
-	//
-	//		if(user.getTotalElements() !=0) {
-	//
-	//			return new ResponseEntity<>(new SuccessResponseDto("sucess", "Sucess",  user.getContent()),HttpStatus.OK);
-	//		}
-	//		else
-	//		{
-	//			return new ResponseEntity<>(new ErrorResponseDto("faild","tryAgain"),HttpStatus.BAD_REQUEST);
-	//
-	//		}
+	
 
 	@GetMapping()
 	public ResponseEntity<?> getAllUser(){
@@ -81,8 +62,8 @@ public class UserController {
 	}
 	
 	//update user 
-	@PutMapping("/{ikd}")
-	public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable("ikd")int uid )
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable("id")int uid )
 	{
 		try {
 			userService.updateUser(userDto, uid);

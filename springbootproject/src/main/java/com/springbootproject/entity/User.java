@@ -29,10 +29,8 @@ public class User implements Serializable  {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 
@@ -47,17 +45,11 @@ public class User implements Serializable  {
 	private String password;
 
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "created_by")
-	private User createdBy;
+
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.user", cascade = CascadeType.ALL)
 	private List<UserRoleEntity> userRole;
 
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "updated_by")
-	private User updatedBy;
 
 	public User() {
 		super();
@@ -65,18 +57,6 @@ public class User implements Serializable  {
 	}
 
 
-	public User(int id, String name, String email, boolean isActive, String password, User createdBy,
-			List<com.springbootproject.entity.UserRoleEntity> userRole, User updatedBy) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.isActive = isActive;
-		this.password = password;
-		this.createdBy = createdBy;
-		this.userRole = userRole;
-		this.updatedBy = updatedBy;
-	}
 
 	public int getId() {
 		return id;
@@ -127,17 +107,6 @@ public class User implements Serializable  {
 
 
 
-	public User getCreatedBy() {
-		return createdBy;
-	}
-
-
-
-
-
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
-	}
 
 
 
@@ -156,25 +125,21 @@ public class User implements Serializable  {
 	}
 
 
-
-
-
-	public User getUpdatedBy() {
-		return updatedBy;
-	}
-
-
-
-
-
-	public void setUpdatedBy(User updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + "]";
+	}
+
+
+
+	public User(int id, String name, String email, boolean isActive, String password, List<UserRoleEntity> userRole) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.isActive = isActive;
+		this.password = password;
+		this.userRole = userRole;
 	}
 
 

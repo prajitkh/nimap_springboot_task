@@ -88,9 +88,15 @@ public class AuthController {
 	@PostMapping("/register")
 	public ResponseEntity<?>createUser(@Valid @RequestBody UserDto userDto )
 			throws Exception	{
+try {
+	return ResponseEntity.ok(userServiceImpl.creatUser(userDto));
+	
+}catch(Exception e) {
+	
 
-		return ResponseEntity.ok(userServiceImpl.creatUser(userDto));
-
+return new ResponseEntity<>("USER ALREADY EXISTIS",HttpStatus.BAD_REQUEST);
+		
+}
 	}
 
 	@Transactional

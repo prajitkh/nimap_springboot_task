@@ -8,7 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.springbootproject.entity.RoleEntity;
 @Repository
 public interface RoleReporsitory extends JpaRepository<RoleEntity, Integer>{
-	Optional<RoleEntity> findByRoleNameContainingIgnoreCase(String name);
 	
+	
+	RoleEntity findByRoleNameContainingIgnoreCase(String roleName);
+
+
 
 }

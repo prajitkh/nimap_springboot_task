@@ -24,8 +24,9 @@ import org.hibernate.annotations.Where;
 
 
 
-@Where(clause = "is_active=true")
-@SQLDelete(sql = "UPDATE  SET roles = false WHERE id=?")
+
+@Where(clause = "is_active= true")
+@SQLDelete(sql = "UPDATE roles SET is_active = false WHERE id=?")
 @Entity
 @Table(name = "roles")
 public class RoleEntity implements Serializable{
@@ -34,9 +35,8 @@ public class RoleEntity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(name = "role_name")
@@ -45,15 +45,7 @@ public class RoleEntity implements Serializable{
 	@Column(name = "is_active")
 	private boolean isActive=true;
 
-	@OneToOne
-	@JoinColumn(name = "created_by")
-	private User createdBy;
-
-	@OneToOne
-	@JoinColumn(name = "updated_by")
-	private User updatedBy;
-
-	@Column(name = "created_at")
+		@Column(name = "created_at")
 	@CreationTimestamp
 	private Date createdAt;
 
@@ -69,18 +61,7 @@ public class RoleEntity implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public RoleEntity(int id, String roleName, boolean isActive, User createdBy, User updatedBy, Date createdAt,
-			Date updatedAt, List<UserRoleEntity> userRole) {
-		super();
-		this.id = id;
-		this.roleName = roleName;
-		this.isActive = isActive;
-		this.createdBy = createdBy;
-		this.updatedBy = updatedBy;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
-		this.userRole = userRole;
-	}
+
 
 	public int getId() {
 		return id;
@@ -106,22 +87,6 @@ public class RoleEntity implements Serializable{
 		this.isActive = isActive;
 	}
 
-	public User getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(User createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public User getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(User updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -143,6 +108,19 @@ public class RoleEntity implements Serializable{
 	}
 
 	public void setUserRole(List<UserRoleEntity> userRole) {
+		this.userRole = userRole;
+	}
+
+
+
+	public RoleEntity(int id, String roleName, boolean isActive, Date createdAt, Date updatedAt,
+			List<UserRoleEntity> userRole) {
+		super();
+		this.id = id;
+		this.roleName = roleName;
+		this.isActive = isActive;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
 		this.userRole = userRole;
 	}
 

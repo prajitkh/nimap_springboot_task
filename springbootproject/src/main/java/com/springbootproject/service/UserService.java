@@ -19,14 +19,14 @@ public interface UserService {
 
 	//	Page<UserDto> getAllUser(String search,String from,String to);
 
-	
+
 	User FindByEmail(String email);
 
 
 	List<UserDto> getAllUser();
 
 	public void deleteUser(Integer userId);
-	
+
 
 }
 

@@ -39,9 +39,6 @@ public class LoggerEntity {
 	private boolean isActive =true;
 
 
-
-
-
 	public int getId() {
 		return id;
 	}

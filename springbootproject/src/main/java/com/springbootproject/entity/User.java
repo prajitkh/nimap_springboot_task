@@ -2,6 +2,7 @@ package com.springbootproject.entity;
 
 
 import java.io.Serializable;
+
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -48,8 +51,13 @@ public class User implements Serializable  {
 
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.user", cascade = CascadeType.ALL)
-	private List<UserRoleEntity> userRole;
-
+private List<UserRoleEntity> userRole;
+	
+	
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	@JoinTable(name = "userInfo_roles", joinColumns = @JoinColumn(name = "u_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "r_id", referencedColumnName = "id"))
+//	private Collection<RoleEntity> roles = new ArrayList<>();
+//	
 
 	public User() {
 		super();
@@ -104,21 +112,9 @@ public class User implements Serializable  {
 	}
 
 
-
-
-
-
-
-
-
-
 	public List<UserRoleEntity> getUserRole() {
 		return userRole;
 	}
-
-
-
-
 
 	public void setUserRole(List<UserRoleEntity> userRole) {
 		this.userRole = userRole;
@@ -141,6 +137,10 @@ public class User implements Serializable  {
 		this.password = password;
 		this.userRole = userRole;
 	}
+
+
+
+
 
 
 

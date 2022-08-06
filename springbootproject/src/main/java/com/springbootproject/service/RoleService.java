@@ -6,8 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.springbootproject.dto.RoleDto;
-import com.springbootproject.dto.UserDto;
+
 import com.springbootproject.entity.RoleEntity;
+
 @Service
 public interface RoleService {
 
@@ -24,5 +25,10 @@ public interface RoleService {
 	
 	RoleDto  getRoleById(Integer id);
 	
-	void addRoleToUser(String email, String roleName);
+///	public void addRoleToUser(int roleId,int id);
+
+	//User addRoleToUser(List<Integer> roleId, int id);
+	
+	 
+	// void addRoleToUsers(String email, String roleName);
 }

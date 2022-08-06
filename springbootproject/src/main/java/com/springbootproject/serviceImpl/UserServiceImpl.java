@@ -17,7 +17,7 @@ import com.springbootproject.exceptions.ResourceNotFoundException;
 
 
 import com.springbootproject.repository.UserRepo;
-import com.springbootproject.security.JwtTokenUtil;
+
 import com.springbootproject.service.UserService;
 
 @Service
@@ -103,9 +103,6 @@ public class UserServiceImpl implements UserService{
 		return  user;
 
 	}
-
-
-
 
 }
 

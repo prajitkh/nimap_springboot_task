@@ -1,6 +1,7 @@
 package com.springbootproject.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,11 +26,9 @@ import org.hibernate.annotations.Where;
 
 
 
-
-
 @Where(clause = "is_active= true")
 @SQLDelete(sql = "UPDATE roles SET is_active = false WHERE id=?")
-@Entity
+
 @Table(name = "roles")
 public class RoleEntity implements Serializable{
 
@@ -56,10 +57,18 @@ public class RoleEntity implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.role", cascade = CascadeType.ALL)
 	private List<UserRoleEntity> userRole;
 
+	
+//@ManyToMany(fetch = FetchType.LAZY)
+////	@JoinTable(name = "userInfo_roles", joinColumns = @JoinColumn(name = "u_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "r_id", referencedColumnName = "id"))
+//private Collection<User> user = new ArrayList<>();
+////	
 	public RoleEntity() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+
+
 
 
 
@@ -103,6 +112,8 @@ public class RoleEntity implements Serializable{
 		this.updatedAt = updatedAt;
 	}
 
+
+
 	public List<UserRoleEntity> getUserRole() {
 		return userRole;
 	}
@@ -125,3 +136,4 @@ public class RoleEntity implements Serializable{
 	}
 
 }
+	

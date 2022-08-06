@@ -3,8 +3,6 @@ package com.springbootproject.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -23,7 +21,7 @@ import org.hibernate.annotations.Where;
 @SQLDelete(sql = "UPDATE user_role SET is_active = false WHERE id=?")
 @Entity
 @Table(name = "user_role")
-@AssociationOverrides({ @AssociationOverride(name = "task.user", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "task.role", joinColumns = @JoinColumn(name = "role_id")) })
+//@AssociationOverrides({ @AssociationOverride(name = "task.user", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "task.role", joinColumns = @JoinColumn(name = "role_id")) })
 public class UserRoleEntity implements Serializable{
 	
 /**
@@ -102,9 +100,6 @@ public boolean isActive() {
 public void setActive(boolean isActive) {
 	this.isActive = isActive;
 }
-
-
-
 
 public void setTask(UserRoleId task) {
 	this.task = task;

@@ -21,11 +21,11 @@ public class UserRoleId implements Serializable {
 	private User user;
 
 	private RoleEntity role;
-	@ManyToOne
+    @ManyToOne
 	public User getUser() {
 		return user;
 	}
-
+	
 	public void setUser(User user) {
 		this.user = user;
 	}

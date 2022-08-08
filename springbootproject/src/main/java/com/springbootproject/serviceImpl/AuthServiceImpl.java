@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.springbootproject.entity.User;
+import com.springbootproject.repository.AuthRepository;
 import com.springbootproject.repository.UserRepo;
 import com.springbootproject.service.AuthInterface;
 
@@ -18,11 +19,13 @@ public class AuthServiceImpl implements AuthInterface {
 	@Autowired
 	private UserRepo userRepo;
 
+	@Autowired
+AuthRepository authRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		User user;
-		user = userRepo.findByEmail(email);
+		user = authRepository.findByEmail(email);
 		if (user == null)
 		{
 			throw new UsernameNotFoundException("User not found with Email: " + email);

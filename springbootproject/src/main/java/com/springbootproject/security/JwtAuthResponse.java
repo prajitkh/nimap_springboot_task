@@ -3,8 +3,6 @@ package com.springbootproject.security;
 import java.io.Serializable;
 
 public class JwtAuthResponse  implements Serializable{
-	
-	
 
 
 	/**

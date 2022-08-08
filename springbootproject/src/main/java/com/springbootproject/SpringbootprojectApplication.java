@@ -8,10 +8,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-
-
-
-
 @SpringBootApplication
 @ComponentScan("com.springbootproject")
 @EntityScan("com.springbootproject")

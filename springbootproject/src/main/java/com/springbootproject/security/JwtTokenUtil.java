@@ -5,14 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 
-import com.springbootproject.entity.User;
-import com.springbootproject.repository.UserRepo;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -27,8 +25,7 @@ public class JwtTokenUtil  {
 	
 
 	public static final long JWT_TOKEN_VALIDITY_FORGOT_PASS = 5 * 60;
-	@Autowired
-	UserRepo userRepo;
+
 
 	//std add properties file not write in class 
 	@Value("${jwt.secret}")

@@ -1,5 +1,7 @@
 package com.springbootproject.dto;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +9,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springbootproject.entity.RoleEntity;
 
 public class UserDto {
 
@@ -24,6 +27,21 @@ public class UserDto {
 	@Size(min = 3,max = 10 ,message ="Password must be 3 char and max size 10 char !!")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
+	
+
+	private List<RoleEntity> roles;
+	
+	
+
+	public List<RoleEntity> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<RoleEntity> roles) {
+		this.roles = roles;
+	}
+
+
 
 	public UserDto() {
 

@@ -2,7 +2,8 @@ package com.springbootproject.entity;
 
 
 import java.io.Serializable;
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,15 +50,18 @@ public class User implements Serializable  {
 
 
 
+	
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.user", cascade = CascadeType.ALL)
+	private List<UserRoleEntity> userRole;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.user", cascade = CascadeType.ALL)
-private List<UserRoleEntity> userRole;
-	
-	
+
 //	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "userInfo_roles", joinColumns = @JoinColumn(name = "u_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "r_id", referencedColumnName = "id"))
-//	private Collection<RoleEntity> roles = new ArrayList<>();
-//	
+//	@JoinTable(name = "userInfo_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+//	private List<RoleEntity> roles = new ArrayList<>();
+
+	
+
+
 
 	public User() {
 		super();
@@ -112,31 +116,64 @@ private List<UserRoleEntity> userRole;
 	}
 
 
-	public List<UserRoleEntity> getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(List<UserRoleEntity> userRole) {
-		this.userRole = userRole;
-	}
-
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + "]";
-	}
+//
+//	public Collection<RoleEntity> getRoles() {
+//		return roles;
+//	}
+//
+//
+//
+//	public void setRoles(List<RoleEntity> roles) {
+//		this.roles = roles;
+//	}
 
 
+//
+//	public User(int id, String name, String email, boolean isActive, String password, List<RoleEntity> roles) {
+//		super();
+//		this.id = id;
+//		this.name = name;
+//		this.email = email;
+//		this.isActive = isActive;
+//		this.password = password;
+//		this.roles = roles;
+//	}
 
-	public User(int id, String name, String email, boolean isActive, String password, List<UserRoleEntity> userRole) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.isActive = isActive;
-		this.password = password;
-		this.userRole = userRole;
-	}
+
+//
+//	@Override
+//	public String toString() {
+//		return "User [id=" + id + ", name=" + name + ", email=" + email + ", isActive=" + isActive + ", password="
+//				+ password + ", roles=" + roles + "]";
+//	}
+
+	
+		public List<UserRoleEntity> getUserRole() {
+			return userRole;
+		}
+	
+		public void setUserRole(List<UserRoleEntity> userRole) {
+			this.userRole = userRole;
+		}
+	
+	
+		@Override
+		public String toString() {
+			return "User [id=" + id + ", name=" + name + ", email=" + email + "]";
+		}
+	
+	
+	
+		public User(int id, String name, String email, boolean isActive, String password, List<UserRoleEntity> userRole) {
+			super();
+			this.id = id;
+			this.name = name;
+			this.email = email;
+			this.isActive = isActive;
+			this.password = password;
+			this.userRole = userRole;
+		}
+
 
 
 

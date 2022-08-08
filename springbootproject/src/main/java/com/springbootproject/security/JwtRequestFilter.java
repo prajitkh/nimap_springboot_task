@@ -18,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import com.springbootproject.serviceImpl.AuthServiceImpl;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -33,11 +34,6 @@ public class JwtRequestFilter  extends OncePerRequestFilter{
 
 @Autowired
 private AuthServiceImpl authServiceImpl;
-
-@Autowired
-private CustemUserDetailService custemUserDetailService;
-
-
 
 	@Autowired
 	private JwtTokenUtil   jwtTokenUtil;
@@ -59,8 +55,7 @@ private CustemUserDetailService custemUserDetailService;
 
 		String email=null;
 		String token=null;
-
-		
+	//	JsonObject jsonObj = null;
 		if(requestToken !=null && requestToken.startsWith("Bearer "))
 		{
 			token =requestToken.substring(7);
@@ -68,6 +63,7 @@ private CustemUserDetailService custemUserDetailService;
 			try {
 				System.out.println("TOKEN "+token);
 				email = this.jwtTokenUtil.getEmailFromToken(token);
+				//jsonObj = JsonParser.parseString(email).getAsJsonObject();
 				
 			}	catch(IllegalArgumentException e)
 			{
@@ -97,10 +93,8 @@ private CustemUserDetailService custemUserDetailService;
 
 		if(email != null && SecurityContextHolder.getContext().getAuthentication() ==null)
 		{
-			//UserDetails userDetails=this.userDetailsService.loadUserByUsername(email);
-			//UserDetails userDetails=custemUserDetailService.loadUserByUsername(email);
 			
-			UserDetails userDetails=this.authServiceImpl.loadUserByUsername(email);
+			UserDetails userDetails=this.authServiceImpl.loadUserByUsername(email);    ///loadUserByUsername(jsonObj.get("email").getAsString());             //loadUserByUsername(email);
 			
 			//validate need username detials to use userdetails service 
 			if(this.jwtTokenUtil.validateToken(token, userDetails))

@@ -1,6 +1,6 @@
 package com.springbootproject.config;
 
-import java.util.Arrays;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
+
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,22 +19,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.springbootproject.security.CustemUserDetailService;
+
 import com.springbootproject.security.JwtAuthenticationEntryPoint;
 import com.springbootproject.security.JwtRequestFilter;
-import com.springbootproject.serviceImpl.AuthServiceImpl;
 
+
+@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
-
-	@Autowired
-	UserDetailsService jwtuserDetailsService;
 	
-	
-	@Autowired
-	private CustemUserDetailService custemUserDetailService;
 	
 	
 	@Autowired
@@ -49,14 +44,14 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
 
 	
 	
+
 	@Override
 	@Bean
 	protected UserDetailsService userDetailsService() {
 	
 		return super.userDetailsService();
 	}
-
-	@Override
+     @Autowired
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 	}
@@ -80,6 +75,7 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
 
 	} 
 	
+
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {

@@ -3,7 +3,10 @@ package com.springbootproject.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+
+import com.springbootproject.dto.EditUserRequestDto;
 import com.springbootproject.dto.UserDto;
+import com.springbootproject.entity.RoleEntity;
 import com.springbootproject.entity.User;
 
 
@@ -18,8 +21,6 @@ public interface UserService {
 	UserDto getUserById(Integer userId);
 
 	//	Page<UserDto> getAllUser(String search,String from,String to);
-
-
 	User FindByEmail(String email);
 
 
@@ -27,8 +28,16 @@ public interface UserService {
 
 	public void deleteUser(Integer userId);
 
+// User addUserRole(RoleEntity roleId,int id);
 
-}
+	void editUserRole(Integer userId, UserDto userBody);
+ 
+ 
+	//public void addRoleToCandidate(Integer userId, Integer roleId);
+	
+	///public void addRoleToUser(String email, String roleName);
+	}
+
 
 
 

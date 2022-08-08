@@ -26,6 +26,7 @@ import com.springbootproject.repository.UserRepo;
 import com.springbootproject.security.JwtAuthResponse;
 import com.springbootproject.security.JwtTokenUtil;
 import com.springbootproject.service.LoggerServiceInterface;
+import com.springbootproject.service.UserService;
 import com.springbootproject.serviceImpl.AuthServiceImpl;
 import com.springbootproject.serviceImpl.UserServiceImpl;
 
@@ -37,7 +38,7 @@ public class AuthController {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@Autowired
-	private UserRepo userRepo;
+	private UserService userService;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -57,7 +58,7 @@ public class AuthController {
 
 		try {
 
-			User user = userRepo.findByEmail(authenticationRequest.getEmail());
+			User user = userService.FindByEmail(authenticationRequest.getEmail());    //findByEmail(authenticationRequest.getEmail());
 			System.out.println(user.getPassword());
 
 			if (authServiceImpl.comparePassword(authenticationRequest.getPassword(), user.getPassword())) {

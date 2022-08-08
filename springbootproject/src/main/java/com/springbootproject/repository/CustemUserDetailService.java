@@ -1,4 +1,4 @@
-package com.springbootproject.security;
+package com.springbootproject.repository;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.springbootproject.entity.User;
-import com.springbootproject.repository.UserRepo;
 @Service
 public class CustemUserDetailService implements UserDetailsService{
 
@@ -22,7 +21,7 @@ public class CustemUserDetailService implements UserDetailsService{
 	
 			User user;
 			user = userRepo.findByEmail(email);
-			if (user == null)
+		if (user == null)
 			{
 				throw new UsernameNotFoundException("User not found with Email: " + email);
 			}

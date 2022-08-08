@@ -7,6 +7,7 @@ public class RoleDto {
 
 	private int id;
 	private String roleName;
+	
 
 	public RoleDto(String roleName) {
 		super();

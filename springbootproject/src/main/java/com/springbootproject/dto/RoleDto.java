@@ -1,7 +1,5 @@
 package com.springbootproject.dto;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 public class RoleDto {
 

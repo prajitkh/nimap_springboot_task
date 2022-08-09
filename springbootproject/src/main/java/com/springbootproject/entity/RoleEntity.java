@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -54,7 +56,7 @@ public class RoleEntity implements Serializable{
 
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.role", cascade = CascadeType.ALL)
 //	private List<UserRoleEntity> userRole;
-//
+
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	//@JoinTable(name = "userInfo_roles", joinColumns = @JoinColumn(name = "u_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "r_id", referencedColumnName = "id"))
@@ -125,11 +127,11 @@ public class RoleEntity implements Serializable{
 //		this.updatedAt = updatedAt;
 //		this.userRole = userRole;
 //	}
-
-	public void setId(List<RoleEntity> roles) {
-		// TODO Auto-generated method stub
-		
-	}
+//
+//	public void setId(List<RoleEntity> roles) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	public RoleEntity(int id, String roleName, boolean isActive, Date createdAt, Date updatedAt, List<User> user) {
 	super();
@@ -149,11 +151,6 @@ public class RoleEntity implements Serializable{
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "RoleEntity [id=" + id + ", roleName=" + roleName + ", isActive=" + isActive + ", createdAt=" + createdAt
-				+ ", updatedAt=" + updatedAt + ", user=" + user + "]";
-	}
 	
 	
 

@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.springbootproject.dto.EditUserRequestDto;
 import com.springbootproject.dto.UserDto;
+import com.springbootproject.entity.AssignRole;
 import com.springbootproject.entity.RoleEntity;
 import com.springbootproject.entity.User;
+import com.springbootproject.entity.UserRoleEntity;
 
 
 
@@ -28,15 +30,11 @@ public interface UserService {
 
 	public void deleteUser(Integer userId);
 
-// User addUserRole(RoleEntity roleId,int id);
+	void editUserRole(List<RoleEntity> entity, Integer id);
 
-	void editUserRole(Integer userId, UserDto userBody);
- 
- 
-	//public void addRoleToCandidate(Integer userId, Integer roleId);
+	User  userToRole(List<Integer> roleId, int id);
 	
-	///public void addRoleToUser(String email, String roleName);
-	}
+}
 
 
 

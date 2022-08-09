@@ -5,6 +5,7 @@ public class AssignRole {
 	
 	private String email;
 	private String  roleName;
+	  
 	public String getEmail() {
 		return email;
 	}

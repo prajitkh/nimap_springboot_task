@@ -29,17 +29,21 @@ public class UserDto {
 	private String password;
 	
 
-	private List<RoleEntity> roles;
-	
-	
 
-	public List<RoleEntity> getRoles() {
-		return roles;
-	}
+	
+//	private List<RoleEntity> roles;
+//	
+//	
+//
+//	public List<RoleEntity> getRoles() {
+//		return roles;
+//	}
+//
+//	public void setRoles(List<RoleEntity> roles) {
+//		this.roles = roles;
+//	}
 
-	public void setRoles(List<RoleEntity> roles) {
-		this.roles = roles;
-	}
+
 
 
 
@@ -49,7 +53,7 @@ public class UserDto {
 
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public int getId() {
 		return id;
 	}

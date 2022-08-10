@@ -30,9 +30,8 @@ public interface UserService {
 
 	public void deleteUser(Integer userId);
 
-	void editUserRole(List<RoleEntity> entity, Integer id);
 
-	User  userToRole(List<Integer> roleId, int id);
+
 	
 }
 

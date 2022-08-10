@@ -26,7 +26,7 @@ import com.springbootproject.entity.UserRoleId;
 import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.repository.RoleReporsitory;
 import com.springbootproject.repository.UserRepo;
-
+import com.springbootproject.repository.UserRoleRepo;
 import com.springbootproject.service.UserService;
 
 import net.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForAbstractMethod;
@@ -45,11 +45,10 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private RoleReporsitory roleRepository;
-	
-	//
-	//	@Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
-	//	private int batchSize;
-	//
+
+	@Autowired
+	private UserRoleRepo userRoleRepo;
+
 
 	private User dtoToUser(UserDto userDto)
 	{
@@ -122,99 +121,12 @@ public class UserServiceImpl implements UserService{
 		return  user;
 
 	}
-	//		@SuppressWarnings("unchecked")
-	//		@Override
-	//		public User addUserRole(RoleEntity roleId, int id) {
-	//			List<RoleEntity>list=new ArrayList<>();
-	//		User user =this.userRepo.findById(id).orElseThrow();
-	//		for (RoleEntity roleEntity : list) {
-	//			roleEntity.getId();
-	//			RoleEntity roleEntity2=this.roleRepository.findById(id).get();
-	//			roleEntity2.setUser((List<User>) user);
-	//			list.add(roleEntity2);
-	//			
-	//		}
-	//		user.setRoles(list);
-	//		return userRepo.save(user);
-	//		
-	//		}
-	
-	
-
-	@Override
-	public void editUserRole(List<RoleEntity> entity, Integer id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	//			@Override
-	//			public UserRoleEntity addRoleToUser( AssignRole  dto) {
-	//			
-	//				User user =userRepo.findByEmail(dto.getEmail());
-	//				
-	//				System.out.println("User " +user.getId());
-	//			
-	//				RoleEntity role = roleRepository.findByName(dto.getRoleName());
-	//				
-	//				System.out.println("role>>"+role.getId());
-	//				
-	//				UserRoleId userRoleId=new UserRoleId(user, role);
-	//				
-	//				UserRoleEntity roleEntity=new UserRoleEntity();
-	//			
-	//				roleEntity.setTask(userRoleId);
-	//				return roleEntity;
-	//	            
-	//				
-	//			}
-
-
-
-//	@Override
-//	public void editUserRole(Integer userId, EditUserRequestDto userBody) {
-//		List<UserRoleEntity> list=new ArrayList<>();
-//		UserRoleEntity entity=new UserRoleEntity();
-//		User user= this.userRepo.findById(userId).get();
-//
-//		for(UserRoleEntity entity2: list) {
-//			user.setId(userId);
-//		RoleEntity entity3=new RoleEntity();
-//		UserRoleId roleId=new UserRoleId(user, entity3);
-//		entity.setTask(roleId);
-//		list.add(entity2);
-//		}
-//		
-//		list.add(entity);
-//
-//
-//	}
 
 
 
 
 
-
-
-public User  userToRole(List<Integer> roleId, int id) {
-	User  user=this.userRepo.findById(id).orElseThrow();
-	System.out.println(user.getRoles());
-
-	for (Integer ids : roleId) {
-
-		Optional<RoleEntity> entity=roleRepository.findById(ids);
-		RoleEntity roleEntity=entity.get();
-		
-	
-		user.getRoles().add(roleEntity);
-		
-		
-	}
-	return userRepo.save(user);
 }
-}
-
-
-
 
 
 

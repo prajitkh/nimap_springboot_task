@@ -54,13 +54,13 @@ public class RoleEntity implements Serializable{
 	@UpdateTimestamp
 	private Date updatedAt;
 
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.role", cascade = CascadeType.ALL)
-//	private List<UserRoleEntity> userRole;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.role", cascade = CascadeType.ALL)
+	private List<UserRoleEntity> userRole;
 
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	//@JoinTable(name = "userInfo_roles", joinColumns = @JoinColumn(name = "u_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "r_id", referencedColumnName = "id"))
-	private List<User> user = new ArrayList<>();
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	//@JoinTable(name = "userInfo_roles", joinColumns = @JoinColumn(name = "u_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "r_id", referencedColumnName = "id"))
+//	private List<User> user = new ArrayList<>();
 
 	public RoleEntity() {
 		super();
@@ -109,49 +109,46 @@ public class RoleEntity implements Serializable{
 
 
 
-//	public List<UserRoleEntity> getUserRole() {
-//		return userRole;
-//	}
-//
-//	public void setUserRole(List<UserRoleEntity> userRole) {
-//		this.userRole = userRole;
-//	}
-//
-//	public RoleEntity(int id, String roleName, boolean isActive, Date createdAt, Date updatedAt,
-//			List<UserRoleEntity> userRole) {
-//		super();
-//		this.id = id;
-//		this.roleName = roleName;
-//		this.isActive = isActive;
-//		this.createdAt = createdAt;
-//		this.updatedAt = updatedAt;
-//		this.userRole = userRole;
-//	}
-//
-//	public void setId(List<RoleEntity> roles) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-
-	public RoleEntity(int id, String roleName, boolean isActive, Date createdAt, Date updatedAt, List<User> user) {
-	super();
-	this.id = id;
-	this.roleName = roleName;
-	this.isActive = isActive;
-	this.createdAt = createdAt;
-	this.updatedAt = updatedAt;
-	this.user = user;
-}
-
-	public Collection<User> getUser() {
-		return user;
+	public List<UserRoleEntity> getUserRole() {
+		return userRole;
 	}
 
-	public void setUser(List<User> user) {
-		this.user = user;
+	public void setUserRole(List<UserRoleEntity> userRole) {
+		this.userRole = userRole;
 	}
 
-	
+	public RoleEntity(int id, String roleName, boolean isActive, Date createdAt, Date updatedAt,
+			List<UserRoleEntity> userRole) {
+		super();
+		this.id = id;
+		this.roleName = roleName;
+		this.isActive = isActive;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.userRole = userRole;
+	}
+
+
+
+//	public RoleEntity(int id, String roleName, boolean isActive, Date createdAt, Date updatedAt, List<User> user) {
+//	super();
+//	this.id = id;
+//	this.roleName = roleName;
+//	this.isActive = isActive;
+//	this.createdAt = createdAt;
+//	this.updatedAt = updatedAt;
+//	this.user = user;
+//}
+//
+//	public Collection<User> getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(List<User> user) {
+//		this.user = user;
+//	}
+//
+//	
 	
 
 }

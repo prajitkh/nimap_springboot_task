@@ -10,11 +10,11 @@ import com.springbootproject.entity.RoleEntity;
 
 @Repository
 public interface RoleReporsitory extends JpaRepository<RoleEntity, Integer>{
-	
-	 @Query("SELECT r FROM RoleEntity r WHERE r.roleName = :roleName")
+
+	@Query("SELECT r FROM RoleEntity r WHERE r.roleName = :roleName")
 	RoleEntity findByName(String roleName);
 
-	 
+
 
 
 }

@@ -1,35 +1,22 @@
 package com.springbootproject.serviceImpl;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.management.relation.Role;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.springbootproject.dto.EditUserRequestDto;
 import com.springbootproject.dto.UserDto;
-import com.springbootproject.entity.AssignRole;
-import com.springbootproject.entity.RoleEntity;
 import com.springbootproject.entity.User;
-import com.springbootproject.entity.UserRoleEntity;
-import com.springbootproject.entity.UserRoleId;
 import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.repository.RoleReporsitory;
 import com.springbootproject.repository.UserRepo;
 import com.springbootproject.repository.UserRoleRepo;
 import com.springbootproject.service.UserService;
 
-import net.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForAbstractMethod;
+
 
 @Service
 public class UserServiceImpl implements UserService{

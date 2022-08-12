@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Where(clause = "is_active=true")
@@ -49,8 +51,6 @@ public class User implements Serializable  {
 	private String password;
 
 
-
-	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.user", cascade = CascadeType.ALL)
 	private List<UserRoleEntity> userRole;
 

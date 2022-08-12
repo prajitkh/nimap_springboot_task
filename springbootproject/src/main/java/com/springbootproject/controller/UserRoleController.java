@@ -7,11 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.springbootproject.dto.SuccessResponseDto;
+import com.springbootproject.dto.UserDto;
+import com.springbootproject.dto.UserRoleDto;
 import com.springbootproject.entity.AssignRole;
+import com.springbootproject.entity.User;
 import com.springbootproject.entity.UserRoleEntity;
 import com.springbootproject.exceptions.ErrorResponseDto;
 import com.springbootproject.exceptions.ResourceNotFoundException;
@@ -37,17 +41,21 @@ public class UserRoleController {
 	@Autowired
 	UserRoleService userRoleService;
 
-	@PostMapping("/role")
-	public ResponseEntity<?> editUser(@RequestBody AssignRole assignRole ){
-		try
-		{
-			this.userRoleService.editUserRole(assignRole);
+	@PutMapping("/role")
+	public ResponseEntity<?> editUser(@RequestBody AssignRole assignRole )
+	{
+		try {
 
-			return new ResponseEntity<>(new SuccessResponseDto(),HttpStatus.FOUND);
-		}catch(ResourceNotFoundException e) {
-			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"Role Not Found"),HttpStatus.NOT_FOUND);
+			this.userRoleService.addUserToRole(assignRole);
+
+			return new ResponseEntity<>(new SuccessResponseDto("add UserToRoles", "check", null),HttpStatus.OK);
+
+		}catch(ResourceNotFoundException e) 
+		{
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
 		}
 	}
+
 
 
 
@@ -61,15 +69,21 @@ public class UserRoleController {
 	//}
 
 
-@GetMapping("/")
-public List<UserRoleEntity> getAllUserRoles(@RequestBody UserRoleEntity userRoleEntity ){
-	List<UserRoleEntity> roleEntity=this.userRoleService.getAllUserRole(userRoleEntity);
-	return roleEntity;
+	@GetMapping
+	public List<UserRoleEntity>getAllUserRoles(){
+		return this.userRoleService.getAllUsersCount();
 
 	
+
+
+
+	}
 }
 
-}
+
+
+
+
 
 
 

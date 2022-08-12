@@ -1,12 +1,11 @@
 package com.springbootproject.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,6 +16,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 
 
 
@@ -26,22 +27,22 @@ import org.hibernate.annotations.Where;
 @Table(name = "user_role")
 @AssociationOverrides({ @AssociationOverride(name = "task.user", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "task.role", joinColumns = @JoinColumn(name = "role_id")) })
 
-public class UserRoleEntity implements Serializable{
+public class UserRoleEntity implements java.io.Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-
+	@CreationTimestamp
 	private Date createAt;
 
-
+	@UpdateTimestamp
 	private Date updateAt;
 
 	private boolean isActive=true;
 
-
+	
 	private UserRoleId task = new UserRoleId();
 
 
@@ -82,7 +83,6 @@ public class UserRoleEntity implements Serializable{
 		this.updateAt = updateAt;
 	}
 
-
 	@EmbeddedId
 	public UserRoleId getTask() {
 		return task;
@@ -102,6 +102,7 @@ public class UserRoleEntity implements Serializable{
 	public void setTask(UserRoleId task) {
 		this.task = task;
 	}
+
 
 
 

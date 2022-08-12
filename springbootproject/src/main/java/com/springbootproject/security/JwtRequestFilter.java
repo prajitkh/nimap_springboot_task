@@ -16,8 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+
 
 import com.springbootproject.serviceImpl.AuthServiceImpl;
 

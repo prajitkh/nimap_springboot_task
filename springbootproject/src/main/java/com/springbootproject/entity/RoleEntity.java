@@ -24,6 +24,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Where(clause = "is_active= true")
@@ -36,6 +38,7 @@ public class RoleEntity implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -53,7 +56,7 @@ public class RoleEntity implements Serializable{
 	@Column(name = "updated_at")
 	@UpdateTimestamp
 	private Date updatedAt;
-
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.role", cascade = CascadeType.ALL)
 	private List<UserRoleEntity> userRole;
 

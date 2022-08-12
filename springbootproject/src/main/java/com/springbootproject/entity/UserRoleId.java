@@ -1,16 +1,19 @@
 package com.springbootproject.entity;
 
-import java.io.Serializable;
+
 import java.util.Objects;
 
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 
 @Embeddable
-public class UserRoleId implements Serializable {
+public class UserRoleId implements java.io.Serializable{
 
 
 	/**
@@ -21,6 +24,8 @@ public class UserRoleId implements Serializable {
 	private User user;
 
 	private RoleEntity role;
+@//JsonIgnore
+
     @ManyToOne
 	public User getUser() {
 		return user;
@@ -29,7 +34,9 @@ public class UserRoleId implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	//@JsonIgnore
 	@ManyToOne
+	
 	public RoleEntity getRole() {
 		return role;
 	}

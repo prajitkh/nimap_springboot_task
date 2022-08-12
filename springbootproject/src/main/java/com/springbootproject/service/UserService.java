@@ -4,12 +4,10 @@ package com.springbootproject.service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-import com.springbootproject.dto.EditUserRequestDto;
+import com.springbootproject.dto.UserDataDto;
 import com.springbootproject.dto.UserDto;
-import com.springbootproject.entity.AssignRole;
-import com.springbootproject.entity.RoleEntity;
 import com.springbootproject.entity.User;
-import com.springbootproject.entity.UserRoleEntity;
+
 
 
 
@@ -32,7 +30,7 @@ public interface UserService {
 
 
 
-	
+
 }
 
 

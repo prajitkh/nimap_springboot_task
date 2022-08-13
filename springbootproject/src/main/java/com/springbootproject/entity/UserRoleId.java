@@ -24,8 +24,7 @@ public class UserRoleId implements java.io.Serializable{
 	private User user;
 
 	private RoleEntity role;
-@//JsonIgnore
-
+ //  @JsonIgnore
     @ManyToOne
 	public User getUser() {
 		return user;

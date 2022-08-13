@@ -52,6 +52,7 @@ public class User implements Serializable  {
 
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.user", cascade = CascadeType.ALL)
+
 	private List<UserRoleEntity> userRole;
 
 

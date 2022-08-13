@@ -13,7 +13,7 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
 	User findByEmail(String email);
 
-	ArrayList<IUserRoleDetailDto> findByTaskUserIdAndTaskUser(Integer userId, Class<IUserRoleDetailDto> IUserRoleDetailDto);
+//	ArrayList<IUserRoleDetailDto> findByTaskUserIdAndTaskUser(Integer userId, Class<IUserRoleDetailDto> IUserRoleDetailDto);
 
 
 

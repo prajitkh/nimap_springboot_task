@@ -1,5 +1,8 @@
 package com.springbootproject.dto;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 
 
 public class UserDataDto {
@@ -9,6 +12,7 @@ public class UserDataDto {
 
 	private String email;
 
+	Optional<ArrayList<UserRoleDto>> roles = Optional.empty();
 	public int getId() {
 		return id;
 	}
@@ -43,6 +47,19 @@ public class UserDataDto {
 		this.id = id;
 		this.name = name;
 		this.email = email;
+	}
+
+	public Optional<ArrayList<UserRoleDto>> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Optional<ArrayList<UserRoleDto>> roles) {
+		this.roles = roles;
+	}
+
+	public void setRoles(ArrayList<UserRoleDto> userRoles) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

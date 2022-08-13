@@ -6,15 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
 import com.springbootproject.dto.SuccessResponseDto;
+import com.springbootproject.dto.UserDataDto;
 import com.springbootproject.dto.UserDto;
 import com.springbootproject.dto.UserRoleDto;
 import com.springbootproject.entity.AssignRole;
+import com.springbootproject.entity.RoleEntity;
 import com.springbootproject.entity.User;
 import com.springbootproject.entity.UserRoleEntity;
 import com.springbootproject.exceptions.ErrorResponseDto;
@@ -69,16 +74,39 @@ public class UserRoleController {
 	//}
 
 
-	@GetMapping
-	public List<UserRoleEntity>getAllUserRoles(){
-		return this.userRoleService.getAllUsersCount();
+	@GetMapping("/check")
+	public ResponseEntity<?> getAllUser(){
+		List<User> user=this.userRoleService.getAllUserRols1();
 
+		try {
+			return new ResponseEntity<>(new SuccessResponseDto("Sucess","Sucess", user),HttpStatus.OK);
+
+		}catch(ResourceNotFoundException e) 
+		{
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
+		}
+	}
+		
 	
+	
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Integer userId) throws ResourceNotFoundException {
 
+		try {
 
+			UserDataDto userDetail = this.userRoleService.getUserRole(userId);
+			return new ResponseEntity<>(new SuccessResponseDto("Success", "success", userDetail), HttpStatus.OK);
+
+		} catch (ResourceNotFoundException e) {
+
+			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "userNotFound"), HttpStatus.NOT_FOUND);
+
+		}
 
 	}
 }
+
 
 
 

@@ -21,12 +21,12 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 
 
+
 @Where(clause = "is_active=true")
 @SQLDelete(sql = "UPDATE user_role SET is_active = false WHERE id=?")
 @Entity
 @Table(name = "user_role")
 @AssociationOverrides({ @AssociationOverride(name = "task.user", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "task.role", joinColumns = @JoinColumn(name = "role_id")) })
-
 public class UserRoleEntity implements java.io.Serializable{
 
 	/**
@@ -42,7 +42,7 @@ public class UserRoleEntity implements java.io.Serializable{
 
 	private boolean isActive=true;
 
-	
+
 	private UserRoleId task = new UserRoleId();
 
 

@@ -17,18 +17,19 @@ public interface UserRoleService {
 
 	//public User editUserRole(Integer userId,List<Integer> rolId);
 	void addUserToRole(AssignRole assignRole);
-
-	
-	UserRoleEntity getAllUsersCount(User user,RoleEntity entity);
- 
- 
  
  UserDataDto getUserRole(Integer  userId);
 
 
-List<User> getAllUserRols1();
+List<UserRoleEntity> getAllUserRols1();
 
 //List<UserRoleEntity> getAllUsersCount(Integer userId);
- 
- 
+
+
+
+//void deleteUserRoles(AssignRole assignRole);
+
+
+void deleteUserRoles(AssignRole assignRole);
+
 }

@@ -1,10 +1,14 @@
 package com.springbootproject.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,56 +50,47 @@ public class UserRoleController {
 	@Autowired
 	UserRoleService userRoleService;
 
+	@Autowired
+	RoleReporsitory roleReporsitory;
 	@PutMapping("/role")
 	public ResponseEntity<?> editUser(@RequestBody AssignRole assignRole )
 	{
 		try {
 
 			this.userRoleService.addUserToRole(assignRole);
-
 			return new ResponseEntity<>(new SuccessResponseDto("add UserToRoles", "check", null),HttpStatus.OK);
-
 		}catch(ResourceNotFoundException e) 
 		{
 			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
 		}
 	}
-
-
-
-
-	//@PutMapping("/{uid}")
-	//public ResponseEntity<?> editUser(@RequestBody List<Integer> roleIds,@PathVariable int uid) {
-	//
-	//User user =this.userService.userToRole(roleIds, uid);
-	//
-	//return new ResponseEntity<>(user,HttpStatus.OK);	
-	//
-	//}
-
 
 	@GetMapping("/check")
 	public ResponseEntity<?> getAllUser(){
-		List<User> user=this.userRoleService.getAllUserRols1();
+
 
 		try {
+
+			List<UserRoleEntity> user=this.userRoleService.getAllUserRols1();
+
 			return new ResponseEntity<>(new SuccessResponseDto("Sucess","Sucess", user),HttpStatus.OK);
 
-		}catch(ResourceNotFoundException e) 
+		}catch(Exception e) 
 		{
 			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
 		}
 	}
-		
-	
-	
-	
+
+
+
+
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Integer userId) throws ResourceNotFoundException {
 
 		try {
 
 			UserDataDto userDetail = this.userRoleService.getUserRole(userId);
+			System.out.println("ABCD"+userDetail);
 			return new ResponseEntity<>(new SuccessResponseDto("Success", "success", userDetail), HttpStatus.OK);
 
 		} catch (ResourceNotFoundException e) {
@@ -104,8 +99,23 @@ public class UserRoleController {
 
 		}
 
-	}
+
 }
+	@DeleteMapping("/")
+	public ResponseEntity<?> deleteUserRoles(@RequestBody AssignRole assignRole )
+	{
+		try {
+
+			this.userRoleService.deleteUserRoles(assignRole);
+			return new ResponseEntity<>(new SuccessResponseDto("add UserToRoles", "check", null),HttpStatus.OK);
+		}catch(ResourceNotFoundException e) 
+		{
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
+		}
+	}
+
+}
+
 
 
 

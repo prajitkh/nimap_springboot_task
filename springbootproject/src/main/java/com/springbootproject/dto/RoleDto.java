@@ -4,15 +4,15 @@ import java.util.List;
 
 import com.springbootproject.entity.UserRoleEntity;
 
-public class RoleDto {
+public class RoleDto  {
 
 	private int id;
 	private String roleName;
-	
-	
+
+
 
 	private List<UserRoleEntity> userRole;
-	
+
 	public List<UserRoleEntity> getUserRole() {
 		return userRole;
 	}
@@ -36,7 +36,7 @@ public class RoleDto {
 
 	public RoleDto() {
 		super();
-		
+
 	}
 
 	public int getId() {

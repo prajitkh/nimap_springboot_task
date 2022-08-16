@@ -29,6 +29,5 @@ public interface RoleService {
 
 	//User addRoleToUser(List<Integer> roleId, int id);
 	
-	 
 	// void addRoleToUsers(String email, String roleName);
 }

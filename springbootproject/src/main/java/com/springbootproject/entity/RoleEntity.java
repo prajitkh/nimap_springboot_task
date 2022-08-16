@@ -24,6 +24,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -58,6 +59,7 @@ public class RoleEntity implements Serializable{
 	private Date updatedAt;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.role", cascade = CascadeType.ALL)
+//	@JsonBackReference
 	private List<UserRoleEntity> userRole;
 
 

@@ -2,7 +2,7 @@ package com.springbootproject.entity;
 
 public class AssignRole {
 
-//	
+	
 //	private String email;
 //	private String  roleName;
 //	  

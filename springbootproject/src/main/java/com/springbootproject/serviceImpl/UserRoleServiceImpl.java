@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.springbootproject.dto.RoleIdListDto;
 import com.springbootproject.dto.UserDataDto;
@@ -17,6 +18,8 @@ import com.springbootproject.entity.RoleEntity;
 import com.springbootproject.entity.User;
 import com.springbootproject.entity.UserRoleEntity;
 import com.springbootproject.entity.UserRoleId;
+import com.springbootproject.exceptions.ErrorResponseDto;
+import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.repository.RoleReporsitory;
 import com.springbootproject.repository.UserRepo;
 import com.springbootproject.repository.UserRoleRepo;
@@ -43,8 +46,8 @@ public class UserRoleServiceImpl implements UserRoleService {
 			ArrayList<UserRoleEntity>roles=new ArrayList<>();
 			User user=this.userRepo.findById(assignRole.getUserId()).orElseThrow();
 			RoleEntity role=this.roleReporsitory.findById(assignRole.getRoleId()).orElseThrow();
-			//User user= this.userRepo.findByEmail(assignRole.getEmail());
-			//	RoleEntity role = roleReporsitory.findByName(assignRole.getRoleName());
+//			User user= this.userRepo.findByEmail(assignRole.getEmail());
+//				RoleEntity role = roleReporsitory.findByName(assignRole.getRoleName());
 			UserRoleId uri = new UserRoleId(user, role);
 			UserRoleEntity ure = new UserRoleEntity();
 
@@ -56,6 +59,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 		}
 
 	}
+
 	@SuppressWarnings("unused")
 	@Override
 	public UserDataDto getUserRole(Integer  userId) {
@@ -86,31 +90,34 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 
 
-	@Override
-	public UserRoleEntity getAllUsersCount(User user,RoleEntity entity){
-		User user1 =this.userRepo.findById(user.getId()).orElseThrow();
-		RoleEntity role=this.roleReporsitory.findById(entity.getId()).orElseThrow();
-		UserRoleId uri = new UserRoleId(user1,role);
-		UserRoleEntity ure = new UserRoleEntity();
-		ure.setTask(uri);
-		return ure;
-	}
-	
-	
-	@Override
-	public List<User> getAllUserRols1() {
-		//List<UserRoleEntity >list=this.userRoleRepo.findById();
-		List<User> user= this.userRepo.findAll();
-	
-		return user;
 
-	
-	
-	
-	
-	
+
+	@Override
+	public List<UserRoleEntity> getAllUserRols1() {
+
+		List<UserRoleEntity >list=this.userRoleRepo.findAll();
+		//List<User> user= this.userRepo.findAll();
+
+		return list;
+
+
 	}
+
+	@Override
+	public void deleteUserRoles(AssignRole assignRole) {
+//		User user =this.userRepo.findByEmail(assignRole.getEmail());
+//		RoleEntity entity =this.roleReporsitory.findByName(assignRole.getRoleName());
+		User user =this.userRepo.findById(assignRole.getUserId()).get();
+		RoleEntity entity =this.roleReporsitory.findById(assignRole.getRoleId()).get();
+		UserRoleId id=new UserRoleId(user, entity);
+		UserRoleEntity roleEntity=new UserRoleEntity();
+		roleEntity.setTask(id);
+		this.userRoleRepo.deleteRole(user.getId(),entity.getId());
+		
 	
+
+
+}
 }
 
 

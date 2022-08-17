@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 
 @Where(clause = "is_active=true")
-@SQLDelete(sql = "UPDATE user_role SET is_active = false WHERE id=?")
+@SQLDelete(sql = "UPDATE user_role u SET is_active=false WHERE u.role_id=? AND  u.user_id=?")
 @Entity
 @Table(name = "user_role")
 @AssociationOverrides({ @AssociationOverride(name = "task.user", joinColumns = @JoinColumn(name = "user_id")), @AssociationOverride(name = "task.role", joinColumns = @JoinColumn(name = "role_id")) })

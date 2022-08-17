@@ -1,5 +1,6 @@
 package com.springbootproject.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,13 +19,18 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "permissions")
-public class PermissionEntity {
+public class PermissionEntity implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private int  id;
 
 	@Column(name = "action_name")
 	private String actionName;
@@ -32,9 +38,7 @@ public class PermissionEntity {
 	@Column(name = "description")
 	private String description;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "entity_id")
-	private EntityEntity entityId;
+	
 
 	@Column(name = "method")
 	private String method;
@@ -55,5 +59,100 @@ public class PermissionEntity {
 	@Column(name = "updated_at")
 	@UpdateTimestamp
 	private Date updatedAt;
+
+	public PermissionEntity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getActionName() {
+		return actionName;
+	}
+
+	public void setActionName(String actionName) {
+		this.actionName = actionName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public String getBaseUrl() {
+		return baseUrl;
+	}
+
+	public void setBaseUrl(String baseUrl) {
+		this.baseUrl = baseUrl;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public PermissionEntity(int id, String actionName, String description, String method,
+			String baseUrl, String path, Boolean isActive, Date createdAt, Date updatedAt) {
+		super();
+		this.id = id;
+		this.actionName = actionName;
+		this.description = description;
+	
+		this.method = method;
+		this.baseUrl = baseUrl;
+		this.path = path;
+		this.isActive = isActive;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
+
 
 }

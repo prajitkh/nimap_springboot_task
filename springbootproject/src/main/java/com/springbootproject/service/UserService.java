@@ -9,8 +9,6 @@ import com.springbootproject.dto.UserDto;
 import com.springbootproject.entity.User;
 
 
-
-
 @Service
 public interface UserService {
 

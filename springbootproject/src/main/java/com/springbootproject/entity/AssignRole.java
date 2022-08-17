@@ -2,7 +2,7 @@ package com.springbootproject.entity;
 
 public class AssignRole {
 
-	
+//	
 //	private String email;
 //	private String  roleName;
 //	  
@@ -27,7 +27,7 @@ public class AssignRole {
 //		super();
 //		// TODO Auto-generated constructor stub
 //	}
-//	
+	
 	
 	
 	private int roleId;

@@ -1,8 +1,10 @@
 package com.springbootproject.repository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,8 +28,13 @@ public class CustemUserDetailService implements UserDetailsService{
 				throw new UsernameNotFoundException("User not found with Email: " + email);
 			}
 
-			return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),new ArrayList<>());
+			return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),new ArrayList<>());
+
+	
+		
+	}
+
+
 		}
 
 
-}

@@ -52,16 +52,17 @@ public class UserRoleController {
 
 	@Autowired
 	RoleReporsitory roleReporsitory;
-	@PutMapping("/role")
-	public ResponseEntity<?> editUser(@RequestBody AssignRole assignRole )
+	@PostMapping("/role")
+	public ResponseEntity<?> editUser(@RequestBody AssignRole assignRole ) throws Exception
 	{
 		try {
 
 			this.userRoleService.addUserToRole(assignRole);
+
 			return new ResponseEntity<>(new SuccessResponseDto("add UserToRoles", "check", null),HttpStatus.OK);
-		}catch(ResourceNotFoundException e) 
+		}catch(Exception e) 
 		{
-			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Already.existis userRole",HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -77,38 +78,51 @@ public class UserRoleController {
 
 		}catch(Exception e) 
 		{
-			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>( new ErrorResponseDto("USER NOT FOUND", "check"),HttpStatus.BAD_REQUEST);
 		}
 	}
 
 
 
 
-	@GetMapping("/{id}")
-	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Integer userId) throws ResourceNotFoundException {
+	//	@GetMapping("/{id}")
+	//	public ResponseEntity<?> getUserById(@PathVariable(value = "id") Integer userId) throws ResourceNotFoundException {
+	//
+	//		try {
+	//
+	//		//	UserDataDto userDetail = this.userRoleService.getUserRole(userId);
+	//			System.out.println("ABCD"+userDetail);
+	//			return new ResponseEntity<>(new SuccessResponseDto("Success", "success", userDetail), HttpStatus.OK);
+	//
+	//		} catch (ResourceNotFoundException e) {
+	//
+	//			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "userNotFound"), HttpStatus.NOT_FOUND);
+	//
+	//		}
 
-		try {
-
-			UserDataDto userDetail = this.userRoleService.getUserRole(userId);
-			System.out.println("ABCD"+userDetail);
-			return new ResponseEntity<>(new SuccessResponseDto("Success", "success", userDetail), HttpStatus.OK);
-
-		} catch (ResourceNotFoundException e) {
-
-			return new ResponseEntity<>(new ErrorResponseDto(e.getMessage(), "userNotFound"), HttpStatus.NOT_FOUND);
-
-		}
 
 
-}
 	@DeleteMapping("/")
 	public ResponseEntity<?> deleteUserRoles(@RequestBody AssignRole assignRole )
 	{
 		try {
+     this.userRoleService.deleteUserRoles(assignRole);
+			return new ResponseEntity<>(new SuccessResponseDto("Delete UserRole Successfully ", "check",null),HttpStatus.OK);
+		}catch(Exception e) 
+		{
+			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER&ROLE NOT FOUND"),HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
+	@PutMapping("/update")
+	public ResponseEntity< ?>updateUserRoles(@RequestBody AssignRole assignRole )
+	{
+		try {
 
-			this.userRoleService.deleteUserRoles(assignRole);
-			return new ResponseEntity<>(new SuccessResponseDto("add UserToRoles", "check", null),HttpStatus.OK);
-		}catch(ResourceNotFoundException e) 
+			this.userRoleService.updateUserRoles(assignRole);
+			return new ResponseEntity<>(new SuccessResponseDto("update UserToRoles", "check", null),HttpStatus.OK);
+		}catch(Exception e) 
 		{
 			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"USER NOT FOUND"),HttpStatus.BAD_REQUEST);
 		}

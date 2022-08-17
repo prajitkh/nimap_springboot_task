@@ -17,9 +17,6 @@ public interface UserRoleService {
 
 	//public User editUserRole(Integer userId,List<Integer> rolId);
 	void addUserToRole(AssignRole assignRole);
- 
- UserDataDto getUserRole(Integer  userId);
-
 
 List<UserRoleEntity> getAllUserRols1();
 
@@ -30,6 +27,9 @@ List<UserRoleEntity> getAllUserRols1();
 //void deleteUserRoles(AssignRole assignRole);
 
 
-void deleteUserRoles(AssignRole assignRole);
+UserRoleEntity deleteUserRoles(AssignRole assignRole);
+
+void updateUserRoles(AssignRole assignRole);
+
 
 }

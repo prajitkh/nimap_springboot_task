@@ -23,7 +23,6 @@ public class SpringbootprojectApplication {
 	public ModelMapper modelMapper() {
 		return  new ModelMapper();
 
-
 	}
 
 

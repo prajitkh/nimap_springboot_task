@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.springbootproject.dto.RoleIdListDto;
 import com.springbootproject.entity.UserRoleEntity;
 import com.springbootproject.service.IUserRoleDetailDto;
 @Repository
@@ -25,8 +26,7 @@ ArrayList<IUserRoleDetailDto> findByTask(Integer userId, Class<IUserRoleDetailDt
 void updateUserRoles(@Param("role_id") Integer role_id,@Param("user_id") Integer userId);
 
 
-
-
+ArrayList<RoleIdListDto> findByTaskUserId(Integer userId, Class<RoleIdListDto> RoleIdListDto);
 
 
 

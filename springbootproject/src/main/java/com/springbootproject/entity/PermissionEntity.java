@@ -14,14 +14,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
-
+@Where(clause = "is_active= true")
+@SQLDelete(sql = "UPDATE permissions SET is_active = false WHERE id=?")
 @Entity
 @Table(name = "permissions")
 public class PermissionEntity implements Serializable{
-	
-	
+
+
 	/**
 	 * 
 	 */
@@ -38,11 +41,9 @@ public class PermissionEntity implements Serializable{
 	@Column(name = "description")
 	private String description;
 
-	
-
 	@Column(name = "method")
 	private String method;
-	
+
 	@Column(name = "base_url")
 	private String baseUrl;
 
@@ -62,7 +63,7 @@ public class PermissionEntity implements Serializable{
 
 	public PermissionEntity() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public int getId() {
@@ -89,7 +90,7 @@ public class PermissionEntity implements Serializable{
 		this.description = description;
 	}
 
-	
+
 
 	public String getMethod() {
 		return method;
@@ -139,13 +140,12 @@ public class PermissionEntity implements Serializable{
 		this.updatedAt = updatedAt;
 	}
 
-	public PermissionEntity(int id, String actionName, String description, String method,
-			String baseUrl, String path, Boolean isActive, Date createdAt, Date updatedAt) {
+	public PermissionEntity(int id, String actionName, String description, String method, String baseUrl, String path,
+			Boolean isActive, Date createdAt, Date updatedAt) {
 		super();
 		this.id = id;
 		this.actionName = actionName;
 		this.description = description;
-	
 		this.method = method;
 		this.baseUrl = baseUrl;
 		this.path = path;
@@ -153,6 +153,9 @@ public class PermissionEntity implements Serializable{
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
+
+
+
 
 
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.springbootproject.dto.PermissionRequestDto;
 import com.springbootproject.entity.PermissionEntity;
-
+import com.springbootproject.exceptions.ResourceNotFoundException;
 import com.springbootproject.repository.PermissionRepository;
 import com.springbootproject.service.PermissionServiceInterface;
 @Service
@@ -18,7 +18,7 @@ public class PermissionServiceImpl  implements PermissionServiceInterface{
 	private PermissionRepository permissionRepository;
 	
 	
-	@SuppressWarnings("deprecation")
+
 	@Override
 	public void addPermission(PermissionRequestDto permissionRequestDto) {
 	
@@ -32,6 +32,30 @@ public class PermissionServiceImpl  implements PermissionServiceInterface{
 		permissionRepository.save(permissionEntity);
 		return;
 	}
+
+
+	@Override
+	public void editPermission(PermissionRequestDto permissionRequestDto, int id) {
+		PermissionEntity permissionEntity=this.permissionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("role Not found "));
+		
+		permissionEntity.setActionName(permissionRequestDto.getActionName());
+		permissionEntity.setBaseUrl(permissionRequestDto.getBaseUrl());
+		permissionEntity.setDescription(permissionRequestDto.getDescription());
+		permissionEntity.setMethod(permissionRequestDto.getMethod());
+		permissionEntity.setPath(permissionRequestDto.getPath());
+		permissionRepository.save(permissionEntity);
+		return;
+	}
+
+
+	@Override
+	public void deletePermission(int id) {
+		PermissionEntity permissionEntity2=this.permissionRepository.findById(id).orElseThrow();
+	this.permissionRepository.delete(permissionEntity2);
+		
+	}
+	
+	
 	
 
 }

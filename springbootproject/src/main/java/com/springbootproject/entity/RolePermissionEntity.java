@@ -75,7 +75,7 @@ public class RolePermissionEntity {
 
 	public RolePermissionEntity() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 	
 }

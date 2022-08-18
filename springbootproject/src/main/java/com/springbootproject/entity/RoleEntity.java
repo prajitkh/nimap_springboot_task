@@ -59,7 +59,7 @@ public class RoleEntity implements Serializable{
 	private Date updatedAt;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.role", cascade = CascadeType.ALL)
-//	@JsonBackReference
+@JsonIgnore
 	private List<UserRoleEntity> userRole;
 
 

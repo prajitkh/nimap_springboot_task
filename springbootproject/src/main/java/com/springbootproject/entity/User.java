@@ -53,7 +53,7 @@ public class User implements Serializable  {
 
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "task.user", cascade = CascadeType.ALL)
-	//@JsonBackReference
+	@JsonIgnore
 	private List<UserRoleEntity> userRole;
 
 

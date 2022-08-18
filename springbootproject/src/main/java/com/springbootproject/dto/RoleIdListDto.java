@@ -1,8 +1,13 @@
 package com.springbootproject.dto;
 
+import com.springbootproject.entity.UserRoleId;
+
 public interface RoleIdListDto {
 
 	
 	
-	public int getTaskRoleId();
-}
+	public Integer getTaskId();
+
+
+	}
+

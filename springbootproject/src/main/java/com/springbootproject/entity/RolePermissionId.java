@@ -43,32 +43,32 @@ public class RolePermissionId  implements Serializable{
 		this.permission = permission;
 	}
 	
-//	@Override
-//	public int hashCode() {
-//
-//		return Objects.hash(permission, role);
-//
-//	}
-//
-//	@Override
-//	public boolean equals(Object obj) {
-//
-//		if (this == obj) {
-//
-//			return true;
-//
-//		}
-//
-//		if ((obj == null) || (getClass() != obj.getClass())) {
-//
-//			return false;
-//
-//		}
-//
-//		RolePermissionId other = (RolePermissionId) obj;
-//		return Objects.equals(permission, other.permission) && Objects.equals(role, other.role);
-//
-//	}
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(permission, role);
+
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if (this == obj) {
+
+			return true;
+
+		}
+
+		if ((obj == null) || (getClass() != obj.getClass())) {
+
+			return false;
+
+		}
+
+		RolePermissionId other = (RolePermissionId) obj;
+		return Objects.equals(permission, other.permission) && Objects.equals(role, other.role);
+
+	}
 
 	public RolePermissionId(RoleEntity role, PermissionEntity permission) {
 		super();

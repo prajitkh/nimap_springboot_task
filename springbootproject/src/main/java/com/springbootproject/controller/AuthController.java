@@ -64,8 +64,8 @@ public class AuthController {
 			if (authServiceImpl.comparePassword(authenticationRequest.getPassword(), user.getPassword())) {
 
 				System.out.println("DATA"+user.getEmail());
-				final UserDetails userDetails=userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-				final String token = jwtTokenUtil.generateToken(userDetails);
+				//final UserDetails userDetails=userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+				final String token = jwtTokenUtil.generateToken(user);
 
 				LoggerDto logger = new LoggerDto();
 				logger.setToken(token);

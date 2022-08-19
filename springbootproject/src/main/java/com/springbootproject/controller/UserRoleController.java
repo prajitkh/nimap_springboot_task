@@ -53,7 +53,7 @@ public class UserRoleController {
 	@Autowired
 	RoleReporsitory roleReporsitory;
 	@PostMapping("/role")
-	public ResponseEntity<?> editUser(@RequestBody AssignRole assignRole ) throws Exception
+	public ResponseEntity<?> addUserRole(@RequestBody AssignRole assignRole ) throws Exception
 	{
 		try {
 

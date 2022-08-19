@@ -24,14 +24,14 @@ import com.springbootproject.security.JwtAuthenticationEntryPoint;
 import com.springbootproject.security.JwtRequestFilter;
 
 
-@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
 	
-	
-	
+//	@Autowired
+//	private CustemUserDetailService custemUserDetailService;
+//	
 	@Autowired
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	
@@ -51,7 +51,8 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
 	
 		return super.userDetailsService();
 	}
-     @Autowired
+	
+    @Autowired
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 	}
@@ -76,12 +77,11 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter{
 	} 
 	
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-
-		return super.authenticationManagerBean();
-	}
+	 @Override
+	    @Bean
+	    public AuthenticationManager authenticationManagerBean() throws Exception{
+	        return super.authenticationManagerBean();
+	    }
 
 	
 	

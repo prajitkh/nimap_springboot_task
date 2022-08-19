@@ -37,8 +37,8 @@ public class UserController {
 	UserServiceImpl userService;
 
 	
-	//@PreAuthorize("hasRole('getAllUser')")
-	@GetMapping()
+@PreAuthorize("hasRole('getAllUser')")
+	@GetMapping("/")
 	public ResponseEntity<?> getAllUser(){
 		List<UserDto> user=this.userService.getAllUser();
 
@@ -52,6 +52,8 @@ public class UserController {
 	}
 
 	//get user by id
+
+	@PreAuthorize("hasRole('getUserById')")
 	@GetMapping("/{userId}")
 	public ResponseEntity<?> getUserById(@Valid @PathVariable Integer userId)
 	{

@@ -23,19 +23,19 @@ import com.springbootproject.service.RolePermissionService;
 @Service
 public class RolePermissionImpl  implements RolePermissionService{
 
-	
+
 	@Autowired
 	private RoleReporsitory roleReporsitory;
-	
+
 	@Autowired
 	private PermissionRepository permissionRepository;
-	
+
 	@Autowired
 	private RolePermissionRepo rolePermissionRepo;
-	
+
 	@Autowired
 	private UserRoleRepo userRoleRepo;
-	
+
 	@Override
 	public void addPermissionToRole(AssignPermission assignPermission) {
 		ArrayList<RolePermissionEntity>list =new ArrayList<>();
@@ -46,40 +46,38 @@ public class RolePermissionImpl  implements RolePermissionService{
 		permissionEntity2.setPk(rolePermissionId);
 		list.add(permissionEntity2);
 		this.rolePermissionRepo.saveAll(list);
-		
-		
+
+
 	}
-	
-	
+
+
 	@Override
 	public List<RolePermissionEntity> getAllRolePermission() {
-		
+
 		return rolePermissionRepo.findAll();
-
-
-
-	}
-	
-public  ArrayList<String> getPermissionByUserId(Integer userId){
-	ArrayList<RoleIdListDto>roleIdListDtos=this.userRoleRepo.findByTaskUserId(userId, RoleIdListDto.class);
-	ArrayList<Integer>list=new ArrayList<>();
-	for(int i=0; i< roleIdListDtos.size(); i++) {
-		list.add(roleIdListDtos.get(i).getTaskId());
 	}
 
-	List<IPermissionIdList> rolesPermission = this.rolePermissionRepo.findPkPermissionByPkRoleIdIn(list, IPermissionIdList.class);
-	ArrayList<String> permissions = new ArrayList<>();
+	@Override
+	public  ArrayList<String> getPermissionByUserId(Integer userId){
+		ArrayList<RoleIdListDto>roleIdListDtos=this.userRoleRepo.findByTaskUserId(userId, RoleIdListDto.class);
+		ArrayList<Integer>list=new ArrayList<>();
+		for(int i=0; i< roleIdListDtos.size(); i++) {
+			list.add(roleIdListDtos.get(i).getTaskUserId());
+		}
 
-	for (IPermissionIdList element : rolesPermission) {
+		List<IPermissionIdList> rolesPermission = this.rolePermissionRepo.findPkPermissionByPkRoleIdIn(list, IPermissionIdList.class);
+		ArrayList<String> permissions = new ArrayList<>();
 
-		permissions.add(element.getPkPermissionActionName());
+		for (IPermissionIdList element : rolesPermission) {
+
+			permissions.add(element.getPkPermissionActionName());
+
+		}
+System.out.println("permission"+ permissions);
+		return permissions;
 
 	}
 
-	return permissions;
 
 }
-	
-	
-}
-	
+

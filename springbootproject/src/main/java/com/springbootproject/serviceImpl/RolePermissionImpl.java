@@ -59,21 +59,24 @@ public class RolePermissionImpl  implements RolePermissionService{
 
 	@Override
 	public  ArrayList<String> getPermissionByUserId(Integer userId){
-		ArrayList<RoleIdListDto>roleIdListDtos=this.userRoleRepo.findByTaskUserId(userId, RoleIdListDto.class);
+		//ArrayList<RoleIdListDto>roleIdListDtos=this.userRoleRepo.findByTaskUserId(userId, RoleIdListDto.class);
+		ArrayList<UserRoleEntity>roleIdListDtos=this.userRoleRepo.getRoleOfUser(userId);
+		System.out.println("check roleslist"+roleIdListDtos);
 		ArrayList<Integer>list=new ArrayList<>();
 		for(int i=0; i< roleIdListDtos.size(); i++) {
-			list.add(roleIdListDtos.get(i).getTaskUserId());
+			list.add(roleIdListDtos.get(i).getTask().getRole().getId());
 		}
 
 		List<IPermissionIdList> rolesPermission = this.rolePermissionRepo.findPkPermissionByPkRoleIdIn(list, IPermissionIdList.class);
 		ArrayList<String> permissions = new ArrayList<>();
-
+System.out.println("permission1223"+permissions);
 		for (IPermissionIdList element : rolesPermission) {
 
 			permissions.add(element.getPkPermissionActionName());
+			System.out.println("permission1223"+permissions);
 
 		}
-System.out.println("permission"+ permissions);
+		System.out.println("permission"+ permissions);
 		return permissions;
 
 	}

@@ -25,8 +25,9 @@ ArrayList<IUserRoleDetailDto> findByTask(Integer userId, Class<IUserRoleDetailDt
 @Query(value ="update user_role u SET  role_id=:role_id WHERE u.user_id=:user_id",nativeQuery =true)
 void updateUserRoles(@Param("role_id") Integer role_id,@Param("user_id") Integer userId);
 
-
-ArrayList<RoleIdListDto> findByTaskUserId(Integer userId, Class<RoleIdListDto> RoleIdListDto);
+@Query(value = "SELECT * FROM user_role u WHERE u.user_id=:user_id",nativeQuery =true)
+//ArrayList<RoleIdListDto> findByTaskUserId(Integer userId, Class<RoleIdListDto> RoleIdListDto);
+ArrayList<UserRoleEntity> getRoleOfUser(@Param("user_id")int userId);
 
 
 

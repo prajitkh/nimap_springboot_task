@@ -67,6 +67,7 @@ public class UserController {
 	}
 	
 	//update user 
+	@PreAuthorize("hasRole('updateUser')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto,@PathVariable("id")int uid )
 	{
@@ -77,7 +78,7 @@ public class UserController {
 			return new ResponseEntity<>( new ErrorResponseDto(e.getMessage(),"User Not Found"),HttpStatus.NOT_FOUND);
 		}
 	}
-
+	@PreAuthorize("hasRole('deleteUser')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Integer id){
 
